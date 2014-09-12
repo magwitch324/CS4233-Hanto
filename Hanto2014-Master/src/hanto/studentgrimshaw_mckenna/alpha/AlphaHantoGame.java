@@ -24,6 +24,7 @@ import java.util.Map;
 
 /**
  * The alpha implementation of HantoGame
+ * 
  * @author Twgrimshaw
  * @author Remckenna
  *
@@ -33,6 +34,12 @@ public class AlphaHantoGame implements HantoGame {
 	private boolean isFirstTurn;
 	private Map<AlphaHantoCoordinate, AlphaHantoPiece> board;
 
+	/**
+	 * Default constructor of AlphaHantoGame. Takes in the player color of who
+	 * moves first
+	 * 
+	 * @param movesFirst
+	 */
 	public AlphaHantoGame(HantoPlayerColor movesFirst) {
 		board = new HashMap<AlphaHantoCoordinate, AlphaHantoPiece>();
 		this.setActivePlayer(movesFirst);
@@ -67,7 +74,6 @@ public class AlphaHantoGame implements HantoGame {
 				throw new HantoException("Invalid first move!");
 			} else {
 				board.put(to, piece);
-
 			}
 		} else {
 			if (!board.containsKey(to)) {
@@ -88,7 +94,6 @@ public class AlphaHantoGame implements HantoGame {
 			} else {
 				throw new HantoException("Destination already occupied");
 			}
-
 		}
 	}
 
@@ -104,7 +109,7 @@ public class AlphaHantoGame implements HantoGame {
 	}
 
 	/**
-	 * 
+	 * Switches the active player
 	 */
 	private void changeActivePlayer() {
 		activePlayer = (activePlayer == HantoPlayerColor.BLUE) ? HantoPlayerColor.RED : HantoPlayerColor.BLUE;
@@ -143,7 +148,7 @@ public class AlphaHantoGame implements HantoGame {
 
 	/**
 	 * @param activePlayer
-	 *            the activePlayer to set
+	 * 
 	 */
 	public void setActivePlayer(HantoPlayerColor activePlayer) {
 		this.activePlayer = activePlayer;

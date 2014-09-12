@@ -14,10 +14,21 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 
+/**
+ * Alpha implementation of HantoPiece
+ * @author Twgrimshaw
+ * @author Remckenna
+ *
+ */
 public class AlphaHantoPiece implements HantoPiece {
 	HantoPlayerColor color;
 	HantoPieceType type;
 
+	/**
+	 * Default constructor for AlphaHantoPiece.
+	 * @param color Color of the piece
+	 * @param type Type of piece
+	 */
 	public AlphaHantoPiece(HantoPlayerColor color, HantoPieceType type) {
 		this.color = color;
 		this.type = type;

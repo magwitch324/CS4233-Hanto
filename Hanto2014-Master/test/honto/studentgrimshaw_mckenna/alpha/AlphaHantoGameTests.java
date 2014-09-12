@@ -27,7 +27,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Tag
+ * Tests for AlphaHantoGame
+ * @author Twgrimshaw
+ * @author Remckenna
  *
  */
 public class AlphaHantoGameTests {

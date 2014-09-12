@@ -19,6 +19,12 @@ import hanto.studentgrimshaw_mckenna.alpha.AlphaHantoCoordinate;
 
 import org.junit.Test;
 
+/**
+ * Tests for AlphaHantoCoordinate
+ * @author Twgrimshaw
+ * @author Remckenna
+ *
+ */
 public class AlphaHantoCoordinateTest {
 
 	@Test
