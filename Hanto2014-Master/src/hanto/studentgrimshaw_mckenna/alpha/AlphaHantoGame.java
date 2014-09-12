@@ -1,5 +1,8 @@
 package hanto.studentgrimshaw_mckenna.alpha;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoGame;
@@ -12,40 +15,65 @@ import hanto.common.MoveResult;
 public class AlphaHantoGame implements HantoGame {
 	private HantoPlayerColor activePlayer;
 	private boolean isFirstTurn;
+	private HashMap<AlphaHantoCoordinate, AlphaHantoPiece> board;
 
 	public AlphaHantoGame(HantoPlayerColor movesFirst) {
+		board = new HashMap<AlphaHantoCoordinate, AlphaHantoPiece>();
 		this.setActivePlayer(movesFirst);
-		this.isFirstTurn = true;
+		isFirstTurn = true;
 	}
 
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
-		//Ensure the piece type is correct for this version of Hanto
-		validatePieceType(pieceType); 
-		//Validate the piece location
-		validatePieceLocation(to);
-		
-		//Upon the player making a valid move switch the active player.
+		AlphaHantoPiece piece = new AlphaHantoPiece(activePlayer, pieceType);
+		// Ensure the piece type is correct for this version of Hanto
+		validatePieceType(pieceType);
+		// Validate the piece location
+		validatePieceLocation(AlphaHantoCoordinate.fromHantoCoordinate(to), piece);
+
+		// Upon the player making a valid move switch the active player.
 		changeActivePlayer();
-		
-		return MoveResult.OK;
+		MoveResult result = (isFirstTurn) ? MoveResult.OK : MoveResult.DRAW;
+		isFirstTurn = false;
+		return result;
 	}
-	
+
 	/**
 	 * 
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void validatePieceLocation(HantoCoordinate to) throws HantoException {
-		// TODO Auto-generated method stub
-		if(isFirstTurn) {
+	private void validatePieceLocation(AlphaHantoCoordinate to,
+			AlphaHantoPiece piece) throws HantoException {
+
+		if (isFirstTurn) {
 			if (to.getX() != 0 || to.getY() != 0) {
 				throw new HantoException("Invalid first move!");
+			} else {
+				board.put(to, piece);
+			
 			}
-		}
-		else {
-			// TODO implement validation to check adjacent pieces.
+		} else {
+			if (!board.containsKey(to)) {
+				boolean hasNeighborPiece = false;
+				AlphaHantoCoordinate[] neighbors = to.getNeighborCoordinates();
+				for (int i = 0; i < 6; i++) {
+					AlphaHantoCoordinate neighbor = neighbors[i];  
+					if (board.containsKey(neighbor)) {
+						hasNeighborPiece = true;
+					}
+				}
+
+				if (!hasNeighborPiece) {
+					throw new HantoException("No neighboring pieces!");
+				}
+
+				board.put(to, piece);
+			} else {
+				throw new HantoException("Destination already occupied");
+			}
+
 		}
 	}
 
@@ -71,8 +99,9 @@ public class AlphaHantoGame implements HantoGame {
 
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) {
-		// TODO Auto-generated method stub
-		return null;
+		AlphaHantoCoordinate coord = AlphaHantoCoordinate.fromHantoCoordinate(where);
+		HantoPiece piece = board.get(coord);
+		return piece;
 	}
 
 	@Override
