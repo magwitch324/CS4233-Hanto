@@ -121,5 +121,20 @@ public class AlphaHantoGameTests {
 		assertEquals("(1,0)\tColor: RED\tType: Butterfly\n(0,0)\tColor: BLUE\tType: Butterfly\n",
 				game.getPrintableBoard());
 	}
+	
+	@Test(expected = HantoException.class)
+	public void attemptToMoveRatherThanPlace() throws HantoException {
+		game.makeMove(HantoPieceType.BUTTERFLY, new AlphaHantoCoordinate(0, 1), new AlphaHantoCoordinate(0, 0));
+	}
+	
+	@Test(expected = HantoException.class)
+	public void attemptToPlaceAfterGameIsOver() throws HantoException {
+		MoveResult result = game.makeMove(HantoPieceType.BUTTERFLY, null, new AlphaHantoCoordinate(0, 0));
+		assertEquals(MoveResult.OK, result);
+		result = game.makeMove(HantoPieceType.BUTTERFLY, null, new AlphaHantoCoordinate(0, 1));
+		assertEquals(MoveResult.DRAW, result);
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new AlphaHantoCoordinate(1, 0));
+		
+	}
 
 }

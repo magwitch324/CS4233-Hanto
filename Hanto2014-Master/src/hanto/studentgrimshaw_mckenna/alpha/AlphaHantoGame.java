@@ -32,6 +32,7 @@ import java.util.Map;
 public class AlphaHantoGame implements HantoGame {
 	private HantoPlayerColor activePlayer;
 	private boolean isFirstTurn;
+	private boolean gameOver;
 	private Map<AlphaHantoCoordinate, AlphaHantoPiece> board;
 
 	/**
@@ -44,11 +45,19 @@ public class AlphaHantoGame implements HantoGame {
 		board = new HashMap<AlphaHantoCoordinate, AlphaHantoPiece>();
 		this.setActivePlayer(movesFirst);
 		isFirstTurn = true;
+		gameOver = false;
 	}
 
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
+		if(gameOver){
+			throw new HantoException("Game is over");
+		}
+		//Validate that the piece is being placed not moved
+		if(from != null){
+			throw new HantoException("No piece movement is allowed");
+		}
 		AlphaHantoPiece piece = new AlphaHantoPiece(activePlayer, pieceType);
 		// Ensure the piece type is correct for this version of Hanto
 		validatePieceType(pieceType);
@@ -58,6 +67,7 @@ public class AlphaHantoGame implements HantoGame {
 		// Upon the player making a valid move switch the active player.
 		changeActivePlayer();
 		MoveResult result = (isFirstTurn) ? MoveResult.OK : MoveResult.DRAW;
+		gameOver = !isFirstTurn;
 		isFirstTurn = false;
 		return result;
 	}
