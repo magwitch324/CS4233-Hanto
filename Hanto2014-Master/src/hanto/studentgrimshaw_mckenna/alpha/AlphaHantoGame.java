@@ -51,11 +51,11 @@ public class AlphaHantoGame implements HantoGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
-		if(gameOver){
+		if (gameOver) {
 			throw new HantoException("Game is over");
 		}
-		//Validate that the piece is being placed not moved
-		if(from != null){
+		// Validate that the piece is being placed not moved
+		if (from != null) {
 			throw new HantoException("No piece movement is allowed");
 		}
 		AlphaHantoPiece piece = new AlphaHantoPiece(activePlayer, pieceType);
@@ -73,6 +73,7 @@ public class AlphaHantoGame implements HantoGame {
 	}
 
 	/**
+	 * Validates that the piece is being placed in a valid location
 	 * 
 	 * @param to
 	 * @throws HantoException
@@ -108,6 +109,7 @@ public class AlphaHantoGame implements HantoGame {
 	}
 
 	/**
+	 * Validates that the piece type is a butterfly
 	 * 
 	 * @param pieceType
 	 * @throws HantoException

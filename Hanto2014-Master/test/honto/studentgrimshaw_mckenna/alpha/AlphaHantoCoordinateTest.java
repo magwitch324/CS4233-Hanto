@@ -21,6 +21,7 @@ import org.junit.Test;
 
 /**
  * Tests for AlphaHantoCoordinate
+ * 
  * @author Twgrimshaw
  * @author Remckenna
  *

@@ -21,6 +21,7 @@ import org.junit.Test;
 
 /**
  * Tests for BetaHantoCoordinate
+ * 
  * @author Twgrimshaw
  * @author Remckenna
  *

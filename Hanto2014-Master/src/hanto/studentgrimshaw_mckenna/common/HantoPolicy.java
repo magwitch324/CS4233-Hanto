@@ -8,33 +8,24 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.studentgrimshaw_mckenna.beta;
+package hanto.studentgrimshaw_mckenna.common;
 
 import hanto.common.HantoPieceType;
-import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Beta Implementation of HantoPolicy. Starts the Players with one butterfly and
- * 5 sparrows
+ * Stores any rules specific to the version of hanto game
  * 
  * @author Twgrimshaw
  * @author Remckenna
  *
  */
-public class BetaHantoPolicy implements HantoPolicy {
-
-	@Override
-	public Map<HantoPieceType, Integer> getStartingHand() {
-
-		Map<HantoPieceType, Integer> hand = new HashMap<HantoPieceType, Integer>();
-
-		hand.put(HantoPieceType.BUTTERFLY, 1);
-		hand.put(HantoPieceType.SPARROW, 5);
-
-		return hand;
-	}
-
+public interface HantoPolicy {
+	/**
+	 * Gets the starting hand for each player
+	 * 
+	 * @return Starting hand
+	 */
+	Map<HantoPieceType, Integer> getStartingHand();
 }

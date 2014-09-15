@@ -13,8 +13,8 @@ package hanto.studentgrimshaw_mckenna.beta;
 import hanto.common.HantoCoordinate;
 
 /**
- * This class is the beta implementation of HantoCoordinate. It contains a x
- * and y coordinate and can return a list of the neighboring tiles
+ * This class is the beta implementation of HantoCoordinate. It contains a x and
+ * y coordinate and can return a list of the neighboring tiles
  * 
  * @author Twgrimshaw
  * @author Remckenna
@@ -80,7 +80,7 @@ public class BetaHantoCoordinate implements HantoCoordinate {
 
 	@Override
 	public boolean equals(Object other) {
-		if(this == other){
+		if (this == other) {
 			return true;
 		}
 		if (!(other instanceof BetaHantoCoordinate)) {

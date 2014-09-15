@@ -80,7 +80,7 @@ public class AlphaHantoCoordinate implements HantoCoordinate {
 
 	@Override
 	public boolean equals(Object other) {
-		if(this == other){
+		if (this == other) {
 			return true;
 		}
 		if (!(other instanceof AlphaHantoCoordinate)) {

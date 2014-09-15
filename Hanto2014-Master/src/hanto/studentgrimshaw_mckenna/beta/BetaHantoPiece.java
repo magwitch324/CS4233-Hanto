@@ -42,8 +42,12 @@ public class BetaHantoPiece implements HantoPiece {
 	}
 
 	/**
+	 * Places the specified piece on the board
 	 * 
+	 * @param board
+	 *            The HantoGameBoard
 	 * @param to
+	 *            The position in which to place the piece
 	 * @throws HantoException
 	 */
 	public void placePiece(Map<BetaHantoCoordinate, BetaHantoPiece> board, BetaHantoCoordinate to)
@@ -56,10 +60,8 @@ public class BetaHantoPiece implements HantoPiece {
 				BetaHantoCoordinate neighbor = neighbors[i];
 				if (board.containsKey(neighbor)) {
 					hasNeighborPiece = true;
-
 				}
 			}
-
 			if (!hasNeighborPiece && board.size() != 0) {
 				throw new HantoException("No neighboring pieces!");
 			}

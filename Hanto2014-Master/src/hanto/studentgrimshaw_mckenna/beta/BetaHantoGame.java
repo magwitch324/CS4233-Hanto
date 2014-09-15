@@ -17,11 +17,8 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentgrimshaw_mckenna.common.HantoGamePolicy;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import hanto.studentgrimshaw_mckenna.common.HantoBoard;
+import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
 
 /**
  * The alpha implementation of HantoGame
@@ -31,14 +28,15 @@ import java.util.Map;
  *
  */
 public class BetaHantoGame implements HantoGame {
-	private BetaPlayer activePlayer;
-	private BetaPlayer player1;
-	private BetaPlayer player2;
+	private HantoBoard board;
+	private BetaHantoPlayer activePlayer;
+	private BetaHantoPlayer player1;
+	private BetaHantoPlayer player2;
 	private double halfTurns;
 	private boolean gameOver;
-	private Map<BetaHantoCoordinate, BetaHantoPiece> board;
-	private HantoGamePolicy policy;
-	
+
+	private HantoPolicy policy;
+
 	private int maxTurns = 6;
 
 	/**
@@ -48,15 +46,16 @@ public class BetaHantoGame implements HantoGame {
 	 * @param movesFirst
 	 */
 	public BetaHantoGame(HantoPlayerColor movesFirst) {
-		board = new HashMap<BetaHantoCoordinate, BetaHantoPiece>();
+		HantoPlayerColor movesSecond = movesFirst == HantoPlayerColor.BLUE ? HantoPlayerColor.RED
+				: HantoPlayerColor.BLUE;
+
+		board = new BetaHantoBoard();
 		policy = new BetaHantoPolicy();
-		player1 = new BetaPlayer(policy, movesFirst);
-		if (movesFirst == HantoPlayerColor.BLUE) {
-			player2 = new BetaPlayer(policy, HantoPlayerColor.RED);
-		} else {
-			player2 = new BetaPlayer(policy, HantoPlayerColor.BLUE);
-		}
+
+		player1 = new BetaHantoPlayer(policy, movesFirst);
+		player2 = new BetaHantoPlayer(policy, movesSecond);
 		setActivePlayer(player1);
+
 		halfTurns = 1;
 		gameOver = false;
 	}
@@ -64,23 +63,19 @@ public class BetaHantoGame implements HantoGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
-
-		if(gameOver){
+		// Check that the game isnt over
+		if (gameOver) {
 			throw new HantoException("Game is over");
 		}
-		BetaHantoPiece piece = new BetaHantoPiece(activePlayer.getColor(), pieceType);
+
 		validateFirstTurn(to);
 
-		// Validate that the piece is being placed not moved
+		// If the piece is coming from the players hand
 		if (from == null) {
-			if (!activePlayer.canPlacePiece(halfTurns, pieceType)) {
-				throw new HantoException("Invalid piece");
-			}
-
-			// Validate the piece location
-			piece.placePiece(board, new BetaHantoCoordinate(to));
-			activePlayer.decrementPieceCount(pieceType);
-		} else {
+			board.placePiece(activePlayer, halfTurns, pieceType, to);
+		}
+		// If the piece is being moved
+		else {
 			throw new HantoException("No piece movement is allowed");
 		}
 
@@ -91,59 +86,33 @@ public class BetaHantoGame implements HantoGame {
 		return result;
 	}
 
+	/**
+	 * Checks for any game ending conditions and returns the result of the move
+	 * 
+	 * @return Result of the last move
+	 */
 	private MoveResult checkGameStatus() {
-		MoveResult result;
-		boolean blueSurrounded = false;
-		boolean redSurrounded = false;
-		
-		//Iterate through the board and find the butterflies
-		Iterator<Map.Entry<BetaHantoCoordinate, BetaHantoPiece>> it = board.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry<BetaHantoCoordinate, BetaHantoPiece> pair = it.next();
-			BetaHantoCoordinate coord = pair.getKey();
-			BetaHantoPiece piece = pair.getValue();
-			if(piece.getType() == HantoPieceType.BUTTERFLY){
-				if(piece.getColor() == HantoPlayerColor.BLUE){
-					blueSurrounded = isCoordinateSurrounded(coord);	
-				}
-				else{
-					redSurrounded = isCoordinateSurrounded(coord);
-				}
-			}
-		}
-		
-		
-		//Check the results
-		if((redSurrounded && blueSurrounded) || halfTurns/2 == maxTurns){
+		MoveResult result = board.checkButterflies();
+
+		// If the result is ok then check the turn count
+		if (result == MoveResult.OK && halfTurns / 2 == maxTurns) {
 			result = MoveResult.DRAW;
+		}
+
+		// if the game is over set the gameOver flag
+		if (result != MoveResult.OK) {
 			gameOver = true;
 		}
-		else if(redSurrounded){
-			result = MoveResult.RED_WINS;
-			gameOver = true;
-		}
-		else if(blueSurrounded){
-			result = MoveResult.BLUE_WINS;
-			gameOver = true;
-		}
-		else{
-			result = MoveResult.OK;
-		}
-		
+
 		return result;
 	}
 
-	private boolean isCoordinateSurrounded(BetaHantoCoordinate center) {
-		BetaHantoCoordinate[] coords = center.getNeighborCoordinates();
-		int i = 0;
-		for (BetaHantoCoordinate coord : coords) {
-			if (board.containsKey(coord)) {
-				i++;
-			}
-		}
-		return i == 6;
-	}
-
+	/**
+	 * Validates that the first piece is placed on 0,0
+	 * 
+	 * @param to
+	 * @throws HantoException
+	 */
 	private void validateFirstTurn(HantoCoordinate to) throws HantoException {
 		if (halfTurns == 1) {
 			if (to.getX() != 0 || to.getY() != 0) {
@@ -162,31 +131,19 @@ public class BetaHantoGame implements HantoGame {
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) {
 		BetaHantoCoordinate coord = new BetaHantoCoordinate(where);
-		HantoPiece piece = board.get(coord);
+		HantoPiece piece = board.getPieceAt(coord);
 		return piece;
 	}
 
 	@Override
 	public String getPrintableBoard() {
-		StringBuilder sb = new StringBuilder();
-
-		Iterator<Map.Entry<BetaHantoCoordinate, BetaHantoPiece>> it = board.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry<BetaHantoCoordinate, BetaHantoPiece> pair = it.next();
-			BetaHantoPiece piece = pair.getValue();
-			sb.append(pair.getKey());
-			sb.append('\t');
-			sb.append(piece);
-			sb.append('\n');
-		}
-
-		return sb.toString();
+		return board.getPrintableBoard();
 	}
 
 	/**
 	 * @return the activePlayer
 	 */
-	public BetaPlayer getActivePlayer() {
+	public BetaHantoPlayer getActivePlayer() {
 		return activePlayer;
 	}
 
@@ -194,7 +151,7 @@ public class BetaHantoGame implements HantoGame {
 	 * @param activePlayer
 	 * 
 	 */
-	public void setActivePlayer(BetaPlayer activePlayer) {
+	public void setActivePlayer(BetaHantoPlayer activePlayer) {
 		this.activePlayer = activePlayer;
 	}
 
