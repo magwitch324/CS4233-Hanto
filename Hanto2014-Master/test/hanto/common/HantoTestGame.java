@@ -37,7 +37,7 @@ public interface HantoTestGame extends HantoGame
 				HantoCoordinate location)
 		{
 			this.player = player;
-			this.pieceType = pieceType;
+			this.pieceType = pieceType; 
 			this.location = location;
 		}
 	}

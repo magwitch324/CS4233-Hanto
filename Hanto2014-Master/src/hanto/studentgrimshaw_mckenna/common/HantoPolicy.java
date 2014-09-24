@@ -28,4 +28,10 @@ public interface HantoPolicy {
 	 * @return Starting hand
 	 */
 	Map<HantoPieceType, Integer> getStartingHand();
+	
+	HantoPlayer constructPlayer1();
+	HantoPlayer constructPlayer2();
+	
+	int getMaxTurns();
+	
 }

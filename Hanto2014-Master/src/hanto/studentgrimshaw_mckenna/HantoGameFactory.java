@@ -10,9 +10,15 @@
 
 package hanto.studentgrimshaw_mckenna;
 
-import hanto.common.*;
+import hanto.common.HantoGame;
+import hanto.common.HantoGameID;
+import hanto.common.HantoPlayerColor;
 import hanto.studentgrimshaw_mckenna.alpha.AlphaHantoGame;
+import hanto.studentgrimshaw_mckenna.beta.BetaHantoBoard;
 import hanto.studentgrimshaw_mckenna.beta.BetaHantoGame;
+import hanto.studentgrimshaw_mckenna.beta.BetaHantoPolicy;
+import hanto.studentgrimshaw_mckenna.common.HantoBoard;
+import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
 
 /**
  * This is a singleton class that provides a factory to create an instance of any version
@@ -65,7 +71,9 @@ public class HantoGameFactory
 			game = new AlphaHantoGame(movesFirst);
 			break;
 		case BETA_HANTO:
-			game = new BetaHantoGame(movesFirst);
+			HantoPolicy policy = new BetaHantoPolicy(movesFirst);
+			HantoBoard board = new BetaHantoBoard();
+			game = new BetaHantoGame(policy, board);
 		default:
 			break;
 		}

@@ -13,7 +13,6 @@ package hanto.studentgrimshaw_mckenna.beta;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentgrimshaw_mckenna.common.HantoPlayer;
-import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
 
 import java.util.Map;
 
@@ -36,8 +35,7 @@ public class BetaHantoPlayer implements HantoPlayer {
 	 * @param color
 	 *            The color of the player
 	 */
-	BetaHantoPlayer(HantoPolicy policy, HantoPlayerColor color) {
-		hand = policy.getStartingHand();
+	BetaHantoPlayer(HantoPlayerColor color) {
 		this.color = color;
 	}
 
@@ -67,5 +65,11 @@ public class BetaHantoPlayer implements HantoPlayer {
 		int remainingPieces = hand.get(pieceType);
 		remainingPieces--;
 		hand.put(pieceType, remainingPieces);
+	}
+
+	@Override
+	public void setStartingHand(Map<HantoPieceType, Integer> startingHand) {
+		hand = startingHand;
+		
 	}
 }

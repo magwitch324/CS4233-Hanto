@@ -10,6 +10,8 @@
 
 package hanto.studentgrimshaw_mckenna.common;
 
+import java.util.Map;
+
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 
@@ -48,4 +50,6 @@ public interface HantoPlayer {
 	 *            The type of piece for which to decrement the count
 	 */
 	void decrementPieceCount(HantoPieceType pieceType);
+
+	void setStartingHand(Map<HantoPieceType, Integer> startingHand);
 }

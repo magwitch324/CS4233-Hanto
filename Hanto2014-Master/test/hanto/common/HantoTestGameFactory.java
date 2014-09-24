@@ -32,7 +32,7 @@ public class HantoTestGameFactory
 	 */
 	public static HantoTestGameFactory getInstance()
 	{
-		return instance;
+		return instance; 
 	}
 	
 	/**
