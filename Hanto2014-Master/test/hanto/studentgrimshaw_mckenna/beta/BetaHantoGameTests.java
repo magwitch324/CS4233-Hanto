@@ -12,7 +12,6 @@ package hanto.studentgrimshaw_mckenna.beta;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import hanto.HantoGameFactory;
 import hanto.common.HantoException;
 import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
@@ -20,6 +19,7 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentgrimshaw_mckenna.HantoGameFactory;
 import hanto.studentgrimshaw_mckenna.beta.BetaHantoCoordinate;
 import hanto.studentgrimshaw_mckenna.beta.BetaHantoGame;
 

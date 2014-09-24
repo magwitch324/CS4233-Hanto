@@ -28,14 +28,12 @@ import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
  *
  */
 public class BetaHantoGame implements HantoGame {
-	private HantoBoard board;
-	private BetaHantoPlayer activePlayer;
-	private BetaHantoPlayer player1;
-	private BetaHantoPlayer player2;
-	private double halfTurns;
-	private boolean gameOver;
+	
+	
 
-	private HantoPolicy policy;
+
+
+	
 
 	private int maxTurns = 6;
 
