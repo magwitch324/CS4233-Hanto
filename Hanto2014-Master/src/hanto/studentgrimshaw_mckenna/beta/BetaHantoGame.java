@@ -24,8 +24,6 @@ import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
  */
 public class BetaHantoGame extends AbstractHantoGame {
 
-	
-
 	/**
 	 * Default constructor of AlphaHantoGame. Takes in the player color of who
 	 * moves first
@@ -40,9 +38,5 @@ public class BetaHantoGame extends AbstractHantoGame {
 	protected void movePiece() throws HantoException {
 		throw new HantoException("No piece movement is allowed");
 	}
-
-
-
-
 
 }

@@ -10,14 +10,14 @@
 
 package hanto.studentgrimshaw_mckenna.beta;
 
-import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
+import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
 import hanto.studentgrimshaw_mckenna.common.HantoBoard;
-import hanto.studentgrimshaw_mckenna.common.HantoPlayer;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -31,36 +31,25 @@ import java.util.Map;
  *
  */
 public class BetaHantoBoard implements HantoBoard {
-	private Map<BetaHantoCoordinate, BetaHantoPiece> board;
+	private Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board;
 
 	/**
 	 * Default constructor the BetaHantoBoard. Initializes the board
 	 */
 	public BetaHantoBoard() {
-		board = new HashMap<BetaHantoCoordinate, BetaHantoPiece>();
+		board = new HashMap<ConcreteHantoCoordinate, ConcreteHantoPiece>();
 	}
 
 	@Override
-	public void placePiece(HantoPlayer player, double halfTurns, HantoPieceType pieceType, HantoCoordinate to)
-			throws HantoException {
-		BetaHantoPiece piece = new BetaHantoPiece(player.getColor(), pieceType);
-
-		// If the player does not has the piece type in their hand throw an
-		// exception
-		if (!player.canPlacePiece(halfTurns, pieceType)) {
-			throw new HantoException("Invalid piece");
-		}
-
-		// Validate the piece location
-		piece.placePiece(board, new BetaHantoCoordinate(to));
-		player.decrementPieceCount(pieceType);
+	public void placePiece(ConcreteHantoPiece piece, ConcreteHantoCoordinate to) {
+		board.put(to, piece);
 	}
 
 	@Override
-	public boolean isCoordinateSurrounded(BetaHantoCoordinate center) {
-		BetaHantoCoordinate[] coords = center.getNeighborCoordinates();
+	public boolean isCoordinateSurrounded(ConcreteHantoCoordinate center) {
+		ConcreteHantoCoordinate[] coords = center.getNeighborCoordinates();
 		int i = 0;
-		for (BetaHantoCoordinate coord : coords) {
+		for (ConcreteHantoCoordinate coord : coords) {
 			if (board.containsKey(coord)) {
 				i++;
 			}
@@ -75,11 +64,11 @@ public class BetaHantoBoard implements HantoBoard {
 		boolean redSurrounded = false;
 
 		// Iterate through the board and find the butterflies
-		Iterator<Map.Entry<BetaHantoCoordinate, BetaHantoPiece>> it = board.entrySet().iterator();
+		Iterator<Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece>> it = board.entrySet().iterator();
 		while (it.hasNext()) {
-			Map.Entry<BetaHantoCoordinate, BetaHantoPiece> pair = it.next();
-			BetaHantoCoordinate coord = pair.getKey();
-			BetaHantoPiece piece = pair.getValue();
+			Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece> pair = it.next();
+			ConcreteHantoCoordinate coord = pair.getKey();
+			ConcreteHantoPiece piece = pair.getValue();
 
 			if (piece.getType() == HantoPieceType.BUTTERFLY) {
 				if (piece.getColor() == HantoPlayerColor.BLUE) {
@@ -106,18 +95,18 @@ public class BetaHantoBoard implements HantoBoard {
 	}
 
 	@Override
-	public HantoPiece getPieceAt(HantoCoordinate coord) {
-		return board.get(new BetaHantoCoordinate(coord));
+	public HantoPiece getPieceAt(ConcreteHantoCoordinate coord) {
+		return board.get(coord);
 	}
 
 	@Override
 	public String getPrintableBoard() {
 		StringBuilder sb = new StringBuilder();
 
-		Iterator<Map.Entry<BetaHantoCoordinate, BetaHantoPiece>> it = board.entrySet().iterator();
+		Iterator<Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece>> it = board.entrySet().iterator();
 		while (it.hasNext()) {
-			Map.Entry<BetaHantoCoordinate, BetaHantoPiece> pair = it.next();
-			BetaHantoPiece piece = pair.getValue();
+			Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece> pair = it.next();
+			ConcreteHantoPiece piece = pair.getValue();
 			sb.append(pair.getKey());
 			sb.append('\t');
 			sb.append(piece);
@@ -125,5 +114,24 @@ public class BetaHantoBoard implements HantoBoard {
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	public void checkCanPlacePiece(ConcreteHantoPiece piece, ConcreteHantoCoordinate to) throws HantoException {
+		if (!board.containsKey(to)) {
+			boolean hasNeighborPiece = false;
+			ConcreteHantoCoordinate[] neighbors = to.getNeighborCoordinates();
+			for (int i = 0; i < 6; i++) {
+				ConcreteHantoCoordinate neighbor = neighbors[i];
+				if (board.containsKey(neighbor)) {
+					hasNeighborPiece = true;
+				}
+			}
+			if (!hasNeighborPiece && board.size() != 0) {
+				throw new HantoException("No neighboring pieces!");
+			}
+		} else {
+			throw new HantoException("Destination already occupied");
+		}
 	}
 }

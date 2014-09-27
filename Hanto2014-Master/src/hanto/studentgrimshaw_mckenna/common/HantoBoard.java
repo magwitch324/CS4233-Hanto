@@ -10,12 +10,9 @@
 
 package hanto.studentgrimshaw_mckenna.common;
 
-import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPiece;
-import hanto.common.HantoPieceType;
 import hanto.common.MoveResult;
-import hanto.studentgrimshaw_mckenna.beta.BetaHantoCoordinate;
 
 /**
  * Interface for the board used in hanto game. Holds and handles information
@@ -40,9 +37,9 @@ public interface HantoBoard {
 	 *            Location to place the piece
 	 * @throws HantoException
 	 */
-	void placePiece(HantoPlayer player, double halfTurns, HantoPieceType pieceType, HantoCoordinate to)
-			throws HantoException;
+	void placePiece(ConcreteHantoPiece piece, ConcreteHantoCoordinate to);
 
+	void checkCanPlacePiece(ConcreteHantoPiece piece, ConcreteHantoCoordinate to) throws HantoException;
 	/**
 	 * Determines whether a specified coordinate on the board is completely
 	 * surrounded by pieces
@@ -51,7 +48,7 @@ public interface HantoBoard {
 	 *            Coordinate to test for
 	 * @return True if the coordinate is surrounded
 	 */
-	boolean isCoordinateSurrounded(BetaHantoCoordinate center);
+	boolean isCoordinateSurrounded(ConcreteHantoCoordinate center);
 
 	/**
 	 * Checks whether either butterfly is surrounded and returns the game result
@@ -67,7 +64,7 @@ public interface HantoBoard {
 	 *            Coordinate to get the piece from
 	 * @return The Hanto piece at the coordinate
 	 */
-	HantoPiece getPieceAt(HantoCoordinate coord);
+	HantoPiece getPieceAt(ConcreteHantoCoordinate coord);
 
 	/**
 	 * Gets a visual representation of the board

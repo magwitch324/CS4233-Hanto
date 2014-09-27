@@ -10,6 +10,7 @@
 
 package hanto.studentgrimshaw_mckenna.common;
 
+import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 
 import java.util.Map;
@@ -22,15 +23,12 @@ import java.util.Map;
  *
  */
 public interface HantoPolicy {
-	/**
-	 * Gets the starting hand for each player
-	 * 
-	 * @return Starting hand
-	 */
-	Map<HantoPieceType, Integer> getStartingHand();
+
 	
 	HantoPlayer constructPlayer1();
 	HantoPlayer constructPlayer2();
+	
+	HantoGameID getId();
 	
 	int getMaxTurns();
 	

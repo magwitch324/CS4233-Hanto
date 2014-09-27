@@ -1,5 +1,7 @@
 package hanto.common;
 
+import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
+import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
 import hanto.studentgrimshaw_mckenna.common.HantoBoard;
 import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
 import hanto.studentgrimshaw_mckenna.gamma.GammaHantoGame;
@@ -10,24 +12,32 @@ public class GammaHantoTestGame extends GammaHantoGame implements HantoTestGame 
 		super(policy, board);
 		// TODO Auto-generated constructor stub
 	}
+
 	@Override
 	public void initializeBoard(PieceLocationPair[] initialPieces) {
-		// TODO Auto-generated method stub
-		for(PieceLocationPair pair : initialPieces) {
-			
+		for (PieceLocationPair pair : initialPieces) {
+			ConcreteHantoPiece piece = pieceFactory.makeHantoPiece(pair.player, pair.pieceType);
+			ConcreteHantoCoordinate to = ConcreteHantoCoordinate.makeFrom(pair.location);
+			board.placePiece(piece, to);
+
+			if (player1.getColor() == pair.player) {
+				player1.decrementPieceCount(pair.pieceType);
+			} else {
+				player2.decrementPieceCount(pair.pieceType);
+			}
 		}
 
 	}
 
 	@Override
 	public void setTurnNumber(int turnNumber) {
-		// TODO Auto-generated method stub
+		this.turnNumber = turnNumber;
 
 	}
 
 	@Override
 	public void setPlayerMoving(HantoPlayerColor player) {
-		// TODO Auto-generated method stub
+		activePlayer = (player1.getColor() == player) ? player1 : player2;
 
 	}
 

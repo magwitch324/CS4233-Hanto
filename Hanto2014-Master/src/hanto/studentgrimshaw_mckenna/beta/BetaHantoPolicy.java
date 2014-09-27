@@ -10,6 +10,7 @@
 
 package hanto.studentgrimshaw_mckenna.beta;
 
+import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentgrimshaw_mckenna.common.HantoPlayer;
@@ -36,8 +37,7 @@ public class BetaHantoPolicy implements HantoPolicy {
 		movesSecond = movesFirst == HantoPlayerColor.BLUE ? HantoPlayerColor.RED : HantoPlayerColor.BLUE;
 	}
 
-	@Override
-	public Map<HantoPieceType, Integer> getStartingHand() {
+	private Map<HantoPieceType, Integer> getStartingHand() {
 
 		Map<HantoPieceType, Integer> hand = new HashMap<HantoPieceType, Integer>();
 
@@ -64,6 +64,11 @@ public class BetaHantoPolicy implements HantoPolicy {
 	@Override
 	public int getMaxTurns() {
 		return 6;
+	}
+
+	@Override
+	public HantoGameID getId() {
+		return HantoGameID.BETA_HANTO;
 	}
 	
 	

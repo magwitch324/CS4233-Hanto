@@ -40,12 +40,12 @@ public class BetaHantoPlayer implements HantoPlayer {
 	}
 
 	@Override
-	public boolean canPlacePiece(double halfTurns, HantoPieceType type) {
+	public boolean canPlacePiece(int turnNumber, HantoPieceType type) {
 		boolean canPlace = false;
 		// if the piece type is valid
 		if (hand.containsKey(type)) {
-			// if its the fourth turn and the butterfly hasnt been placed yet
-			if (halfTurns / 2 > 3 && hand.get(HantoPieceType.BUTTERFLY) != 0) {
+			// if its the fourth turn and the butterfly hasn't been placed yet
+			if (turnNumber > 3 && hand.get(HantoPieceType.BUTTERFLY) != 0) {
 				// Make sure the piece being placed is a butterfly
 				canPlace = (type == HantoPieceType.BUTTERFLY);
 			} else {

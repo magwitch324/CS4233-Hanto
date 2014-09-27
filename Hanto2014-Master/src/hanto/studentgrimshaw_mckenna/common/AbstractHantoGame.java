@@ -6,49 +6,48 @@ import hanto.common.HantoGame;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.MoveResult;
-import hanto.studentgrimshaw_mckenna.beta.BetaHantoCoordinate;
 
 public abstract class AbstractHantoGame implements HantoGame {
 
-	private HantoBoard board;
-	private HantoPlayer activePlayer;
-	private HantoPlayer player1;
-	private HantoPlayer player2;
-	private double halfTurns;
+	protected HantoPlayer player1;
+	protected HantoPlayer player2;
+	protected int turnNumber;	
 	private boolean gameOver;
 	private int maxTurns;
+	protected PieceFactory pieceFactory;
+	protected HantoPlayer activePlayer;
+	protected HantoBoard board;
 
 	public AbstractHantoGame(HantoPolicy policy, HantoBoard board) {
+
+		// create game environment
 		this.board = board;
+		pieceFactory = new PieceFactory(policy.getId());
 		maxTurns = policy.getMaxTurns();
+
+		// Create players
 		player1 = policy.constructPlayer1();
 		player2 = policy.constructPlayer2();
 
+		// set game conditions
 		setActivePlayer(player1);
-		halfTurns = 1;
+		turnNumber = 1;
 		gameOver = false;
 	}
 
 	@Override
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
+	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate hFrom, HantoCoordinate hTo)
 			throws HantoException {
 		checkGameOver();
+		ConcreteHantoCoordinate to = ConcreteHantoCoordinate.makeFrom(hTo);
+		ConcreteHantoCoordinate from = ConcreteHantoCoordinate.makeFrom(hFrom);
+
 		if (placingPiece(from)) {
 			placePiece(pieceType, to);
-		}
-		// If the piece is being moved
-		else {
+		} else {
 			movePiece();
 		}
 		MoveResult result = resolveTurn();
-		return result;
-	}
-
-	private MoveResult resolveTurn() {
-		// Upon the player making a valid move switch the active player.
-		changeActivePlayer();
-		MoveResult result = checkGameStatus();
-		halfTurns++;
 		return result;
 	}
 
@@ -58,17 +57,36 @@ public abstract class AbstractHantoGame implements HantoGame {
 		}
 	}
 
+	private boolean placingPiece(ConcreteHantoCoordinate from) {
+		return from == null;
+	}
+
+	protected void placePiece(HantoPieceType pieceType, ConcreteHantoCoordinate to) throws HantoException {
+		validateFirstTurn(to);
+
+		// construct the piece
+		ConcreteHantoPiece piece = pieceFactory.makeHantoPiece(activePlayer.getColor(), pieceType);
+
+		// If the player does not have the piece type in their hand throw an
+		// exception
+		if (!activePlayer.canPlacePiece(turnNumber, pieceType)) {
+			throw new HantoException("Invalid piece");
+		}
+
+		board.checkCanPlacePiece(piece, to);
+		board.placePiece(piece, to);
+		activePlayer.decrementPieceCount(pieceType);
+	}
+
 	protected void movePiece() throws HantoException {
 
 	}
 
-	private boolean placingPiece(HantoCoordinate from) {
-		return from == null;
-	}
-
-	protected void placePiece(HantoPieceType pieceType, HantoCoordinate to) throws HantoException {
-		validateFirstTurn(to);
-		board.placePiece(activePlayer, halfTurns, pieceType, to);
+	private MoveResult resolveTurn() {
+		// Upon the player making a valid move switch the active player.
+		changeActivePlayer();
+		MoveResult result = checkGameStatus();
+		return result;
 	}
 
 	/**
@@ -77,8 +95,8 @@ public abstract class AbstractHantoGame implements HantoGame {
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void validateFirstTurn(HantoCoordinate to) throws HantoException {
-		if (halfTurns == 1) {
+	private void validateFirstTurn(ConcreteHantoCoordinate to) throws HantoException {
+		if (turnNumber == 1 && activePlayer == player1) {
 			if (to.getX() != 0 || to.getY() != 0) {
 				throw new HantoException("Invalid first move!");
 			}
@@ -89,7 +107,12 @@ public abstract class AbstractHantoGame implements HantoGame {
 	 * Switches the active player
 	 */
 	private void changeActivePlayer() {
-		activePlayer = (activePlayer.equals(player2)) ? player1 : player2;
+		if (activePlayer.equals(player2)) {
+			activePlayer = player1;
+			turnNumber++;
+		} else {
+			activePlayer = player2;
+		}
 	}
 
 	/**
@@ -101,7 +124,7 @@ public abstract class AbstractHantoGame implements HantoGame {
 		MoveResult result = board.checkButterflies();
 
 		// If the result is ok then check the turn count
-		if (result == MoveResult.OK && halfTurns / 2 == maxTurns) {
+		if (result == MoveResult.OK && turnNumber > maxTurns) {
 			result = MoveResult.DRAW;
 		}
 
@@ -115,7 +138,7 @@ public abstract class AbstractHantoGame implements HantoGame {
 
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) {
-		BetaHantoCoordinate coord = new BetaHantoCoordinate(where);
+		ConcreteHantoCoordinate coord = ConcreteHantoCoordinate.makeFrom(where);
 		HantoPiece piece = board.getPieceAt(coord);
 		return piece;
 	}

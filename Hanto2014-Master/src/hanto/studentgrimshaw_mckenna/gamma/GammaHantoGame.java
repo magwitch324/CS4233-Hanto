@@ -10,5 +10,4 @@ public class GammaHantoGame extends AbstractHantoGame {
 		super(policy, board);
 		// TODO Auto-generated constructor stub
 	}
-
 }

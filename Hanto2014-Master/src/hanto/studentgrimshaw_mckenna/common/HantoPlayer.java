@@ -33,7 +33,7 @@ public interface HantoPlayer {
 	 *            Type of the piece looking to be placed
 	 * @return True if the player can place the piece
 	 */
-	boolean canPlacePiece(double halfTurns, HantoPieceType type);
+	boolean canPlacePiece(int turnNumber, HantoPieceType type);
 
 	/**
 	 * Gets the color associated with the player
