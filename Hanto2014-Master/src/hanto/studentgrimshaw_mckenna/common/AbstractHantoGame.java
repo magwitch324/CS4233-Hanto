@@ -5,20 +5,28 @@ import hanto.common.HantoException;
 import hanto.common.HantoGame;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
+import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentgrimshaw_mckenna.common.factories.PieceFactory;
 
 public abstract class AbstractHantoGame implements HantoGame {
 
-	protected HantoPlayer player1;
-	protected HantoPlayer player2;
-	protected int turnNumber;	
+	//Game state variables
 	private boolean gameOver;
 	private int maxTurns;
+	protected int turnNumber;
+	
+	//Game objects
 	protected PieceFactory pieceFactory;
-	protected HantoPlayer activePlayer;
 	protected HantoBoard board;
+	
+	//Player variables
+	protected HantoPlayer activePlayer;
+	protected HantoPlayer player1;
+	protected HantoPlayer player2;
+	
 
-	public AbstractHantoGame(HantoPolicy policy, HantoBoard board) {
+	protected AbstractHantoGame(HantoPolicy policy, HantoBoard board) {
 
 		// create game environment
 		this.board = board;
@@ -38,16 +46,23 @@ public abstract class AbstractHantoGame implements HantoGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate hFrom, HantoCoordinate hTo)
 			throws HantoException {
-		checkGameOver();
-		ConcreteHantoCoordinate to = ConcreteHantoCoordinate.makeFrom(hTo);
-		ConcreteHantoCoordinate from = ConcreteHantoCoordinate.makeFrom(hFrom);
 
-		if (placingPiece(from)) {
-			placePiece(pieceType, to);
-		} else {
-			movePiece();
+		MoveResult result;
+
+		checkGameOver();
+		result = isResigning(pieceType, hFrom, hTo);
+		if (result == null) {
+
+			ConcreteHantoCoordinate to = ConcreteHantoCoordinate.makeFrom(hTo);
+			ConcreteHantoCoordinate from = ConcreteHantoCoordinate.makeFrom(hFrom);
+
+			if (placingPiece(from)) {
+				placePiece(pieceType, to);
+			} else {
+				movePiece(pieceType, from , to);
+			}
+			result = resolveTurn();
 		}
-		MoveResult result = resolveTurn();
 		return result;
 	}
 
@@ -55,6 +70,31 @@ public abstract class AbstractHantoGame implements HantoGame {
 		if (gameOver) {
 			throw new HantoException("Game is over");
 		}
+	}
+
+	/**
+	 * This method returns the move result when a player resigns. When a player
+	 * resigns, that player's opponent wins the game.
+	 * 
+	 * @param pieceType
+	 *            Null if resigning.
+	 * @param hFrom
+	 *            Null if resigning.
+	 * @param hTo
+	 *            Null if resigning.
+	 * @return The move result.
+	 */
+	protected MoveResult isResigning(HantoPieceType pieceType, HantoCoordinate hFrom, HantoCoordinate hTo) {
+		MoveResult result = null;
+
+		if (pieceType == null && hFrom == null && hTo == null) {
+			if (activePlayer.getColor() == HantoPlayerColor.BLUE) {
+				result = MoveResult.RED_WINS;
+			} else {
+				result = MoveResult.BLUE_WINS;
+			}
+		}
+		return result;
 	}
 
 	private boolean placingPiece(ConcreteHantoCoordinate from) {
@@ -78,8 +118,12 @@ public abstract class AbstractHantoGame implements HantoGame {
 		activePlayer.decrementPieceCount(pieceType);
 	}
 
-	protected void movePiece() throws HantoException {
-
+	protected void movePiece(HantoPieceType pieceType, ConcreteHantoCoordinate from, ConcreteHantoCoordinate to) throws HantoException {
+		if (!activePlayer.canMovePiece()) {
+			throw new HantoException("Player may not move pieces untill butterfly is placed");
+		}
+		ConcreteHantoPiece piece = board.checkMovePiece(activePlayer.getColor(), pieceType, from, to);
+		board.movePiece(piece, from, to);
 	}
 
 	private MoveResult resolveTurn() {
@@ -160,7 +204,7 @@ public abstract class AbstractHantoGame implements HantoGame {
 	 * 
 	 */
 	public void setActivePlayer(HantoPlayer player12) {
-		this.activePlayer = player12;
+		activePlayer = player12;
 	}
 
 }

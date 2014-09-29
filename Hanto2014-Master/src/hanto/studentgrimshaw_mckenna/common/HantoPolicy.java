@@ -11,9 +11,6 @@
 package hanto.studentgrimshaw_mckenna.common;
 
 import hanto.common.HantoGameID;
-import hanto.common.HantoPieceType;
-
-import java.util.Map;
 
 /**
  * Stores any rules specific to the version of hanto game

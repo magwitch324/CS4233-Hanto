@@ -10,6 +10,9 @@
 
 package hanto.studentgrimshaw_mckenna.common;
 
+import java.util.Map;
+
+import hanto.common.HantoException;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
@@ -22,8 +25,9 @@ import hanto.common.HantoPlayerColor;
  *
  */
 public class ConcreteHantoPiece implements HantoPiece {
-	HantoPlayerColor color;
-	HantoPieceType type;
+	private HantoPlayerColor color;
+	private HantoPieceType type;
+	private MoveValidator validator;
 
 	/**
 	 * Default constructor for AlphaHantoPiece.
@@ -54,5 +58,21 @@ public class ConcreteHantoPiece implements HantoPiece {
 	public String toString() {
 		return "Color: " + color + "\tType: " + type;
 	}
+
+	public void validateMove(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board, ConcreteHantoCoordinate from,
+			ConcreteHantoCoordinate to) throws HantoException {
+		validator.validateMove(board, from, to);
+
+	}
+
+	public void setValidator(MoveValidator validator) {
+		this.validator = validator;
+	}
+
+	public void checkSingleBlock(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
+			Map<ConcreteHantoCoordinate, Boolean> status, ConcreteHantoCoordinate centerCoord) {
+		validator.checkSingleBlock(board, status, centerCoord);
+		
+	} 
 
 }

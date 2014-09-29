@@ -52,4 +52,6 @@ public interface HantoPlayer {
 	void decrementPieceCount(HantoPieceType pieceType);
 
 	void setStartingHand(Map<HantoPieceType, Integer> startingHand);
+
+	boolean canMovePiece();
 }

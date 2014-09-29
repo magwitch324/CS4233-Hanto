@@ -13,8 +13,7 @@ package hanto.studentgrimshaw_mckenna.beta;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentgrimshaw_mckenna.common.HantoPlayer;
-import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
+import hanto.studentgrimshaw_mckenna.common.AbstractHantoPolicy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,50 +26,15 @@ import java.util.Map;
  * @author Remckenna
  *
  */
-public class BetaHantoPolicy implements HantoPolicy {
+public class BetaHantoPolicy extends AbstractHantoPolicy {
 
-	private HantoPlayerColor movesFirst;
-	private HantoPlayerColor movesSecond;
-
-	public BetaHantoPolicy(HantoPlayerColor movesFirst) {
-		this.movesFirst = movesFirst;
-		movesSecond = movesFirst == HantoPlayerColor.BLUE ? HantoPlayerColor.RED : HantoPlayerColor.BLUE;
-	}
-
-	private Map<HantoPieceType, Integer> getStartingHand() {
-
-		Map<HantoPieceType, Integer> hand = new HashMap<HantoPieceType, Integer>();
-
-		hand.put(HantoPieceType.BUTTERFLY, 1);
-		hand.put(HantoPieceType.SPARROW, 5);
-
-		return hand;
-	}
-	
-	@Override
-	public HantoPlayer constructPlayer1() {
-		HantoPlayer player1 = new BetaHantoPlayer(movesFirst);
-		player1.setStartingHand(getStartingHand());
-		return player1;
-	}
-
-	@Override
-	public HantoPlayer constructPlayer2() {
-		HantoPlayer player2 = new BetaHantoPlayer(movesSecond);
-		player2.setStartingHand(getStartingHand());
-		return player2;
+	public BetaHantoPolicy(HantoGameID id, HantoPlayerColor movesFirst) {
+		super(id, movesFirst);
 	}
 
 	@Override
 	public int getMaxTurns() {
 		return 6;
 	}
-
-	@Override
-	public HantoGameID getId() {
-		return HantoGameID.BETA_HANTO;
-	}
-	
-	
 
 }

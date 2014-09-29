@@ -19,9 +19,9 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentgrimshaw_mckenna.HantoGameFactory;
 import hanto.studentgrimshaw_mckenna.beta.BetaHantoGame;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
+import hanto.studentgrimshaw_mckenna.common.factories.HantoGameFactory;
 
 import org.junit.Before;
 import org.junit.Test;

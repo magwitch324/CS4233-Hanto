@@ -12,6 +12,8 @@ package hanto.studentgrimshaw_mckenna.common;
 
 import hanto.common.HantoException;
 import hanto.common.HantoPiece;
+import hanto.common.HantoPieceType;
+import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 
 /**
@@ -72,4 +74,9 @@ public interface HantoBoard {
 	 * @return The string representing the board
 	 */
 	String getPrintableBoard();
+
+	ConcreteHantoPiece checkMovePiece(HantoPlayerColor color, HantoPieceType pieceType, ConcreteHantoCoordinate from,
+			ConcreteHantoCoordinate to) throws HantoException;
+
+	void movePiece(ConcreteHantoPiece piece, ConcreteHantoCoordinate from, ConcreteHantoCoordinate to);
 }
