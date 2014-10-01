@@ -19,6 +19,9 @@ import hanto.studentgrimshaw_mckenna.beta.BetaHantoGame;
 import hanto.studentgrimshaw_mckenna.beta.BetaHantoPolicy;
 import hanto.studentgrimshaw_mckenna.common.HantoBoard;
 import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
+import hanto.studentgrimshaw_mckenna.delta.DeltaHantoBoard;
+import hanto.studentgrimshaw_mckenna.delta.DeltaHantoGame;
+import hanto.studentgrimshaw_mckenna.delta.DeltaHantoPolicy;
 import hanto.studentgrimshaw_mckenna.gamma.GammaHantoBoard;
 import hanto.studentgrimshaw_mckenna.gamma.GammaHantoGame;
 import hanto.studentgrimshaw_mckenna.gamma.GammaHantoPolicy;
@@ -69,21 +72,26 @@ public class HantoGameFactory
 	 */
 	public HantoGame makeHantoGame(HantoGameID gameId, HantoPlayerColor movesFirst) {
 		HantoGame game = null;
+		HantoPolicy policy = null;
+		HantoBoard board = null;
 		switch (gameId) {
 		case ALPHA_HANTO:
 			game = new AlphaHantoGame(movesFirst);
 			break;
 		case BETA_HANTO:
-			HantoPolicy policy = new BetaHantoPolicy(gameId, movesFirst);
-			HantoBoard board = new BetaHantoBoard();
+			policy = new BetaHantoPolicy(gameId, movesFirst);
+			board = new BetaHantoBoard();
 			game = new BetaHantoGame(policy, board);
 			break;
 		case GAMMA_HANTO:
-			//TODO: change this to gamma.
-			HantoPolicy policy2 = new GammaHantoPolicy(gameId, movesFirst);
-			HantoBoard board2 = new GammaHantoBoard();
-			game = new GammaHantoGame(policy2, board2);
+			policy = new GammaHantoPolicy(gameId, movesFirst);
+			board = new GammaHantoBoard();
+			game = new GammaHantoGame(policy, board);
 			break;
+		case DELTA_HANTO:
+			policy = new DeltaHantoPolicy(gameId, movesFirst);
+			board = new DeltaHantoBoard();
+			game = new DeltaHantoGame(policy, board);
 		default:
 			break;
 		}

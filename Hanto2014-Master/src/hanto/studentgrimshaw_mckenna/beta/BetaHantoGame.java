@@ -10,11 +10,12 @@
 
 package hanto.studentgrimshaw_mckenna.beta;
 
+import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
+import hanto.common.MoveResult;
 import hanto.studentgrimshaw_mckenna.common.AbstractHantoGame;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
-import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
 import hanto.studentgrimshaw_mckenna.common.HantoBoard;
 import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
 
@@ -41,6 +42,11 @@ public class BetaHantoGame extends AbstractHantoGame {
 	protected void movePiece(HantoPieceType pieceType, ConcreteHantoCoordinate from, ConcreteHantoCoordinate to) throws HantoException {
 		activePlayer.canMovePiece();
 		throw new HantoException("No piece movement is allowed");
+	}
+	
+	@Override
+	protected MoveResult isResigning(HantoPieceType pieceType, HantoCoordinate hFrom, HantoCoordinate hTo) {
+		return null;
 	}
 
 }

@@ -160,7 +160,10 @@ public abstract class AbstractHantoBoard implements HantoBoard {
 			throw new HantoException("Piece does not exist at this location");
 		}
 		if (piece.getColor() != color) {
-			throw new HantoException("Attempt to move the wrong piece.");
+			throw new HantoException("Cannot move other player's piece.");
+		}
+		if(!piece.getType().equals(pieceType)){
+			throw new HantoException("Incorrect piece type for the specified location");
 		}
 		piece.validateMove(board, from, to);
 		return board.get(from);

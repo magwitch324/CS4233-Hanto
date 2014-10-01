@@ -16,6 +16,7 @@ import hanto.common.HantoException;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.studentgrimshaw_mckenna.common.validators.MoveValidator;
 
 /**
  * Alpha implementation of HantoPiece

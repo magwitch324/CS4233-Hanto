@@ -14,6 +14,7 @@ import hanto.studentgrimshaw_mckenna.common.AbstractHantoBoard;
 import hanto.studentgrimshaw_mckenna.common.HantoBoard;
 import hanto.studentgrimshaw_mckenna.common.HantoPlayer;
 import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
+import hanto.studentgrimshaw_mckenna.delta.DeltaHantoPlayer;
 import hanto.studentgrimshaw_mckenna.gamma.GammaHantoGame;
 import hanto.studentgrimshaw_mckenna.gamma.GammaHantoPlayer;
 
@@ -51,6 +52,9 @@ private static final HantoPlayerFactory INSTANCE = new HantoPlayerFactory();
 			break;
 		case GAMMA_HANTO:
 			player = new GammaHantoPlayer(color);
+			break;
+		case DELTA_HANTO:
+			player = new DeltaHantoPlayer(color);
 			break;
 		default:
 			break;

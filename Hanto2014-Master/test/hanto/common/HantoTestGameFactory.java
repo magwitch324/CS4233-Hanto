@@ -12,6 +12,8 @@ package hanto.common;
 
 import hanto.studentgrimshaw_mckenna.common.HantoBoard;
 import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
+import hanto.studentgrimshaw_mckenna.delta.DeltaHantoBoard;
+import hanto.studentgrimshaw_mckenna.delta.DeltaHantoPolicy;
 import hanto.studentgrimshaw_mckenna.gamma.GammaHantoBoard;
 import hanto.studentgrimshaw_mckenna.gamma.GammaHantoPolicy;
 
@@ -59,12 +61,19 @@ public class HantoTestGameFactory {
 	 * @return the game instance
 	 */
 	public HantoTestGame makeHantoTestGame(HantoGameID gameId, HantoPlayerColor movesFirst) {
+		HantoPolicy policy = null;
 		HantoTestGame game = null;
+		HantoBoard board = null;
 		switch (gameId) {
 		case GAMMA_HANTO:
-			HantoPolicy policy = new GammaHantoPolicy(gameId, movesFirst);
-			HantoBoard board = new GammaHantoBoard();
+			policy = new GammaHantoPolicy(gameId, movesFirst);
+			board = new GammaHantoBoard();
 			game = new GammaHantoTestGame(policy, board);
+			break;
+		case DELTA_HANTO:
+			policy = new DeltaHantoPolicy(gameId, movesFirst);
+			board = new DeltaHantoBoard();
+			game = new DeltaHantoTestGame(policy, board);
 			break;
 		default:
 			break;

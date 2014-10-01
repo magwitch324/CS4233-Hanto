@@ -1,13 +1,12 @@
 package hanto.studentgrimshaw_mckenna.common;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentgrimshaw_mckenna.beta.BetaHantoPlayer;
 import hanto.studentgrimshaw_mckenna.common.factories.HantoPlayerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class AbstractHantoPolicy implements HantoPolicy {
 
@@ -22,7 +21,7 @@ public abstract class AbstractHantoPolicy implements HantoPolicy {
 		movesSecond = movesFirst == HantoPlayerColor.BLUE ? HantoPlayerColor.RED : HantoPlayerColor.BLUE;
 	}
 
-	private Map<HantoPieceType, Integer> getStartingHand() {
+	protected Map<HantoPieceType, Integer> getStartingHand() {
 
 		Map<HantoPieceType, Integer> hand = new HashMap<HantoPieceType, Integer>();
 

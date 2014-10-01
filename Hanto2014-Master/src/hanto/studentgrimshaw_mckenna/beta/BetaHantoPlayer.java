@@ -10,12 +10,8 @@
 
 package hanto.studentgrimshaw_mckenna.beta;
 
-import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentgrimshaw_mckenna.common.AbstractHantoPlayer;
-import hanto.studentgrimshaw_mckenna.common.HantoPlayer;
-
-import java.util.Map;
 
 /**
  * Beta Implementation
