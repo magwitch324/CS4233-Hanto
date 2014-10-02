@@ -25,7 +25,7 @@ import hanto.studentgrimshaw_mckenna.common.interfaces.HantoPlayer;
 import hanto.studentgrimshaw_mckenna.common.interfaces.HantoPolicy;
 
 /**
- * Concrete implementation of HantoPlayer
+ * Abstract class for HantoGame
  * 
  * @author Twgrimshaw
  * @author Remckenna
