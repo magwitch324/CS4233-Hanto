@@ -11,12 +11,8 @@
 package hanto.studentgrimshaw_mckenna.beta;
 
 import hanto.common.HantoGameID;
-import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentgrimshaw_mckenna.common.AbstractHantoPolicy;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Beta Implementation of HantoPolicy. Starts the Players with one butterfly and

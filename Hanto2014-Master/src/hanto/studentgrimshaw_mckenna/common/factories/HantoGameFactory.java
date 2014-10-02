@@ -14,15 +14,12 @@ import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPlayerColor;
 import hanto.studentgrimshaw_mckenna.alpha.AlphaHantoGame;
-import hanto.studentgrimshaw_mckenna.beta.BetaHantoBoard;
 import hanto.studentgrimshaw_mckenna.beta.BetaHantoGame;
 import hanto.studentgrimshaw_mckenna.beta.BetaHantoPolicy;
 import hanto.studentgrimshaw_mckenna.common.HantoBoard;
 import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
-import hanto.studentgrimshaw_mckenna.delta.DeltaHantoBoard;
 import hanto.studentgrimshaw_mckenna.delta.DeltaHantoGame;
 import hanto.studentgrimshaw_mckenna.delta.DeltaHantoPolicy;
-import hanto.studentgrimshaw_mckenna.gamma.GammaHantoBoard;
 import hanto.studentgrimshaw_mckenna.gamma.GammaHantoGame;
 import hanto.studentgrimshaw_mckenna.gamma.GammaHantoPolicy;
 
@@ -80,17 +77,17 @@ public class HantoGameFactory
 			break;
 		case BETA_HANTO:
 			policy = new BetaHantoPolicy(gameId, movesFirst);
-			board = new BetaHantoBoard();
+			board = HantoBoardFactory.getInstance().makeHantoBoard(gameId);
 			game = new BetaHantoGame(policy, board);
 			break;
 		case GAMMA_HANTO:
 			policy = new GammaHantoPolicy(gameId, movesFirst);
-			board = new GammaHantoBoard();
+			board = HantoBoardFactory.getInstance().makeHantoBoard(gameId);
 			game = new GammaHantoGame(policy, board);
 			break;
 		case DELTA_HANTO:
 			policy = new DeltaHantoPolicy(gameId, movesFirst);
-			board = new DeltaHantoBoard();
+			board = HantoBoardFactory.getInstance().makeHantoBoard(gameId);
 			game = new DeltaHantoGame(policy, board);
 		default:
 			break;

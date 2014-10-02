@@ -50,16 +50,16 @@ public abstract class AbstractHantoGame implements HantoGame {
 		MoveResult result;
 
 		checkGameOver();
-		result = isResigning(pieceType, hFrom, hTo);
+		result = checkResigning(pieceType, hFrom, hTo);
 		if (result == null) {
 
 			ConcreteHantoCoordinate to = ConcreteHantoCoordinate.makeFrom(hTo);
 			ConcreteHantoCoordinate from = ConcreteHantoCoordinate.makeFrom(hFrom);
 
-			if (placingPiece(from)) {
+			if (isPlacingPiece(from)) {
 				placePiece(pieceType, to);
 			} else {
-				movePiece(pieceType, from , to);
+				movePiece(pieceType, from, to);
 			}
 			result = resolveTurn();
 		}
@@ -84,7 +84,7 @@ public abstract class AbstractHantoGame implements HantoGame {
 	 *            Null if resigning.
 	 * @return The move result.
 	 */
-	protected MoveResult isResigning(HantoPieceType pieceType, HantoCoordinate hFrom, HantoCoordinate hTo) {
+	protected MoveResult checkResigning(HantoPieceType pieceType, HantoCoordinate hFrom, HantoCoordinate hTo) {
 		MoveResult result = null;
 
 		if (pieceType == null && hFrom == null && hTo == null) {
@@ -97,7 +97,7 @@ public abstract class AbstractHantoGame implements HantoGame {
 		return result;
 	}
 
-	private boolean placingPiece(ConcreteHantoCoordinate from) {
+	private boolean isPlacingPiece(ConcreteHantoCoordinate from) {
 		return from == null;
 	}
 
@@ -140,7 +140,7 @@ public abstract class AbstractHantoGame implements HantoGame {
 	 * @throws HantoException
 	 */
 	private void validateFirstTurn(ConcreteHantoCoordinate to) throws HantoException {
-		if (turnNumber == 1 && activePlayer == player1) {
+		if (turnNumber == 1 && activePlayer.equals(player1)) {
 			if (to.getX() != 0 || to.getY() != 0) {
 				throw new HantoException("Invalid first move!");
 			}

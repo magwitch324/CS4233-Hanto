@@ -1,6 +1,5 @@
 package hanto.common;
 
-import hanto.common.HantoTestGame.PieceLocationPair;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
 import hanto.studentgrimshaw_mckenna.common.HantoBoard;

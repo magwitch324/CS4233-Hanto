@@ -6,15 +6,14 @@ package hanto.studentgrimshaw_mckenna.gamma;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.HantoTestGame;
+import hanto.common.HantoTestGame.PieceLocationPair;
 import hanto.common.HantoTestGameFactory;
 import hanto.common.MoveResult;
-import hanto.common.HantoTestGame.PieceLocationPair;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
 import hanto.studentgrimshaw_mckenna.common.exceptions.HantoPlacementException;
 
@@ -182,28 +181,30 @@ public class GammaHantoGameTests {
 		}
 		assertTrue(exceptionCaught);
 	}
-	
+
 	@Test(expected = HantoException.class)
-	public void cantMoveToOccupiedSpace() throws HantoException{
+	public void cantMoveToOccupiedSpace() throws HantoException {
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, new ConcreteHantoCoordinate(0, 0));
 		testGame.makeMove(HantoPieceType.SPARROW, null, new ConcreteHantoCoordinate(1, 0));
-		
-		testGame.makeMove(HantoPieceType.BUTTERFLY, new ConcreteHantoCoordinate(0, 0), new ConcreteHantoCoordinate(1, 0));
+
+		testGame.makeMove(HantoPieceType.BUTTERFLY, new ConcreteHantoCoordinate(0, 0),
+				new ConcreteHantoCoordinate(1, 0));
 	}
-	
+
 	@Test(expected = HantoException.class)
-	public void tryMoveMoreThanOne() throws HantoException{
+	public void tryMoveMoreThanOne() throws HantoException {
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, new ConcreteHantoCoordinate(0, 0));
 		testGame.makeMove(HantoPieceType.SPARROW, null, new ConcreteHantoCoordinate(1, 0));
-		
-		testGame.makeMove(HantoPieceType.BUTTERFLY, new ConcreteHantoCoordinate(0, 0), new ConcreteHantoCoordinate(2, 0));
+
+		testGame.makeMove(HantoPieceType.BUTTERFLY, new ConcreteHantoCoordinate(0, 0),
+				new ConcreteHantoCoordinate(2, 0));
 	}
-	
+
 	@Test(expected = HantoPlacementException.class)
-	public void tryPlaceNextToEnemy() throws HantoException{
+	public void tryPlaceNextToEnemy() throws HantoException {
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, new ConcreteHantoCoordinate(0, 0));
 		testGame.makeMove(HantoPieceType.SPARROW, null, new ConcreteHantoCoordinate(1, 0));
-		
+
 		testGame.makeMove(HantoPieceType.SPARROW, null, new ConcreteHantoCoordinate(2, 0));
 	}
 

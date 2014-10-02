@@ -45,7 +45,7 @@ public class BetaHantoGame extends AbstractHantoGame {
 	}
 	
 	@Override
-	protected MoveResult isResigning(HantoPieceType pieceType, HantoCoordinate hFrom, HantoCoordinate hTo) {
+	protected MoveResult checkResigning(HantoPieceType pieceType, HantoCoordinate hFrom, HantoCoordinate hTo) {
 		return null;
 	}
 

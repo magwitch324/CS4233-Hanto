@@ -15,6 +15,7 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentgrimshaw_mckenna.common.interfaces.PlacementNeighborValidator;
 
 /**
  * Interface for the board used in hanto game. Holds and handles information
@@ -79,4 +80,6 @@ public interface HantoBoard {
 			ConcreteHantoCoordinate to) throws HantoException;
 
 	void movePiece(ConcreteHantoPiece piece, ConcreteHantoCoordinate from, ConcreteHantoCoordinate to);
+	
+	void setPlacementNeighborValidator(PlacementNeighborValidator validator);
 }

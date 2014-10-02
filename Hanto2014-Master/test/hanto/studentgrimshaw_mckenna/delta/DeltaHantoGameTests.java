@@ -83,48 +83,46 @@ public class DeltaHantoGameTests {
 
 	@Test(expected = HantoException.class)
 	public void crabMayNotWalkMoreThanOneHexOnTurn() throws HantoException {
-		MoveResult result;
-
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, coord(0, 0));
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, coord(0, 1));
 		testGame.makeMove(HantoPieceType.CRAB, null, coord(-1, 0));
 		testGame.makeMove(HantoPieceType.CRAB, null, coord(0, 2));
-		result = testGame.makeMove(HantoPieceType.CRAB, coord(-1, 0), coord(1, -1));
+		testGame.makeMove(HantoPieceType.CRAB, coord(-1, 0), coord(1, -1));
 	}
-	
+
 	@Test
 	public void checkSparrowCanFly() throws HantoException {
-		MoveResult result;
+
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, coord(0, 0));
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, coord(0, 1));
 		testGame.makeMove(HantoPieceType.SPARROW, null, coord(-1, 0));
 		testGame.makeMove(HantoPieceType.CRAB, null, coord(0, 2));
-		
-		testGame.makeMove(HantoPieceType.SPARROW, coord(-1, 0), coord(0, 3));	
+
+		testGame.makeMove(HantoPieceType.SPARROW, coord(-1, 0), coord(0, 3));
 	}
-	
+
 	@Test(expected = HantoException.class)
 	public void checkFlyOntoPiece() throws HantoException {
-		MoveResult result;
+
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, coord(0, 0));
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, coord(0, 1));
 		testGame.makeMove(HantoPieceType.SPARROW, null, coord(-1, 0));
 		testGame.makeMove(HantoPieceType.CRAB, null, coord(0, 2));
-		
-		testGame.makeMove(HantoPieceType.SPARROW, coord(-1, 0), coord(0, 2));	
+
+		testGame.makeMove(HantoPieceType.SPARROW, coord(-1, 0), coord(0, 2));
 	}
-	
+
 	@Test(expected = HantoException.class)
 	public void checkFlyBreaksChain() throws HantoException {
-		MoveResult result;
+
 		testGame.makeMove(HantoPieceType.SPARROW, null, coord(0, 0));
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, coord(0, 1));
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, coord(-1, 0));
 		testGame.makeMove(HantoPieceType.CRAB, null, coord(0, 2));
-		
-		testGame.makeMove(HantoPieceType.SPARROW, coord(0, 0), coord(0, 3));	
+
+		testGame.makeMove(HantoPieceType.SPARROW, coord(0, 0), coord(0, 3));
 	}
-	
+
 	@Test
 	public void flyToWin() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[7];
@@ -146,9 +144,9 @@ public class DeltaHantoGameTests {
 		testGame.setTurnNumber(20);
 		MoveResult result = testGame.makeMove(HantoPieceType.SPARROW, new ConcreteHantoCoordinate(0, 3),
 				new ConcreteHantoCoordinate(1, 0));
-		assertEquals(MoveResult.BLUE_WINS, result);	
+		assertEquals(MoveResult.BLUE_WINS, result);
 	}
-	
+
 	@Test(expected = HantoException.class)
 	public void attemptToPlaceAfterUsingAllSparrows() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[4];
@@ -164,11 +162,10 @@ public class DeltaHantoGameTests {
 		testGame.initializeBoard(initialPieces);
 		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
 		testGame.setTurnNumber(0);
-		testGame.makeMove(HantoPieceType.SPARROW, null,
-				new ConcreteHantoCoordinate(1, 0));
-		
+		testGame.makeMove(HantoPieceType.SPARROW, null, new ConcreteHantoCoordinate(1, 0));
+
 	}
-	
+
 	@Test(expected = HantoException.class)
 	public void attemptToPlaceAfterUsingAllCrabs() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[4];
@@ -184,25 +181,23 @@ public class DeltaHantoGameTests {
 		testGame.initializeBoard(initialPieces);
 		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
 		testGame.setTurnNumber(0);
-		testGame.makeMove(HantoPieceType.CRAB, null,
-				new ConcreteHantoCoordinate(1, 0));
-		
+		testGame.makeMove(HantoPieceType.CRAB, null, new ConcreteHantoCoordinate(1, 0));
+
 	}
-	
+
 	@Test(expected = HantoException.class)
 	public void attemptToPlaceAfterUsingAllButterflies() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[1];
 		initialPieces[0] = new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
-				new ConcreteHantoCoordinate(0, 0));;
+				new ConcreteHantoCoordinate(0, 0));
+		;
 
 		testGame.initializeBoard(initialPieces);
 		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
 		testGame.setTurnNumber(0);
-		testGame.makeMove(HantoPieceType.BUTTERFLY, null,
-				new ConcreteHantoCoordinate(1, 0));
-		
-	}
+		testGame.makeMove(HantoPieceType.BUTTERFLY, null, new ConcreteHantoCoordinate(1, 0));
 
+	}
 
 	private ConcreteHantoCoordinate coord(int x, int y) {
 		return new ConcreteHantoCoordinate(x, y);

@@ -8,8 +8,4 @@ public class HantoPlacementException extends HantoException {
 		super(message);
 	}
 
-	/*public HantoPlacementException(String message, Throwable cause) {
-		super(message, cause);
-	}*/
-
 }

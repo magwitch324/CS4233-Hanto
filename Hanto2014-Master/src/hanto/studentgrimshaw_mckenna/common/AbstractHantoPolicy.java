@@ -15,7 +15,7 @@ public abstract class AbstractHantoPolicy implements HantoPolicy {
 	private HantoPlayerColor movesSecond;
 	private HantoGameID id;
 
-	public AbstractHantoPolicy(HantoGameID id, HantoPlayerColor movesFirst) {
+	protected AbstractHantoPolicy(HantoGameID id, HantoPlayerColor movesFirst) {
 		this.id = id;
 		this.movesFirst = movesFirst;
 		movesSecond = movesFirst == HantoPlayerColor.BLUE ? HantoPlayerColor.RED : HantoPlayerColor.BLUE;
