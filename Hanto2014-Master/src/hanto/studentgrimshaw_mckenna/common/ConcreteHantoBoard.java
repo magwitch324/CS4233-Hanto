@@ -16,6 +16,7 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentgrimshaw_mckenna.common.exceptions.HantoPlacementException;
+import hanto.studentgrimshaw_mckenna.common.interfaces.HantoBoard;
 import hanto.studentgrimshaw_mckenna.common.interfaces.PlacementNeighborValidator;
 
 import java.util.HashMap;
@@ -23,21 +24,62 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Beta implementation of the HantoBoard
+ * Concrete implementation of the HantoBoard
  * 
  * @author Twgrimshaw
  * @author Remckenna
  *
  */
 public class ConcreteHantoBoard implements HantoBoard {
+
 	private Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board;
 	private PlacementNeighborValidator validator;
 
 	/**
-	 * Default constructor the BetaHantoBoard. Initializes the board
+	 * Default constructor the ConcreteHantoBoard. Initializes the board
 	 */
 	public ConcreteHantoBoard() {
 		board = new HashMap<ConcreteHantoCoordinate, ConcreteHantoPiece>();
+	}
+
+	/**
+	 * Sets the placement validator
+	 */
+	public void setPlacementNeighborValidator(PlacementNeighborValidator validator) {
+		this.validator = validator;
+	}
+
+	/***********************
+	 * Placement Functions *
+	 ***********************/
+	@Override
+	public void checkCanPlacePiece(ConcreteHantoPiece piece, ConcreteHantoCoordinate to) throws HantoException {
+		if (!board.containsKey(to)) {
+			boolean hasValidNeighborPiece = false;
+			boolean hasInvalidNeighborPiece = false;
+			ConcreteHantoCoordinate[] neighbors = to.getNeighborCoordinates();
+
+			for (int i = 0; i < 6; i++) {
+				ConcreteHantoCoordinate neighbor = neighbors[i];
+				if (board.containsKey(neighbor)) {
+					if (validator.isValidNeighborPiece(piece, board.get(neighbor))) {
+						hasValidNeighborPiece = true;
+					} else {
+						hasInvalidNeighborPiece = true;
+					}
+				}
+			}
+
+			if (hasInvalidNeighborPiece) {
+				if (board.size() != 1) {
+					throw new HantoPlacementException("Cannot place next to enemy piece");
+				}
+			} else if (!hasValidNeighborPiece && board.size() != 0) {
+				throw new HantoException("No neighboring allied pieces!");
+			}
+		} else {
+			throw new HantoException("Destination already occupied");
+		}
 	}
 
 	@Override
@@ -45,18 +87,36 @@ public class ConcreteHantoBoard implements HantoBoard {
 		board.put(to, piece);
 	}
 
+	/***********************
+	 * Movement Functions *
+	 ***********************/
 	@Override
-	public boolean isCoordinateSurrounded(ConcreteHantoCoordinate center) {
-		ConcreteHantoCoordinate[] coords = center.getNeighborCoordinates();
-		int i = 0;
-		for (ConcreteHantoCoordinate coord : coords) {
-			if (board.containsKey(coord)) {
-				i++;
-			}
+	public ConcreteHantoPiece checkMovePiece(HantoPlayerColor color, HantoPieceType pieceType,
+			ConcreteHantoCoordinate from, ConcreteHantoCoordinate to) throws HantoException {
+		ConcreteHantoPiece piece = board.get(from);
+
+		if (piece == null) {
+			throw new HantoException("Piece does not exist at this location");
 		}
-		return i == 6;
+		if (piece.getColor() != color) {
+			throw new HantoException("Cannot move other player's piece.");
+		}
+		if (!piece.getType().equals(pieceType)) {
+			throw new HantoException("Incorrect piece type for the specified location");
+		}
+		piece.validateMove(board, from, to);
+		return board.get(from);
 	}
 
+	@Override
+	public void movePiece(ConcreteHantoPiece piece, ConcreteHantoCoordinate from, ConcreteHantoCoordinate to) {
+		board.remove(from);
+		board.put(to, piece);
+	}
+
+	/***********************
+	 * Gamestate Functions *
+	 ***********************/
 	@Override
 	public MoveResult checkButterflies() {
 		MoveResult result;
@@ -94,6 +154,27 @@ public class ConcreteHantoBoard implements HantoBoard {
 		return result;
 	}
 
+	/**
+	 * Determines if a coordinate is surrounded by pieces
+	 * 
+	 * @param center
+	 *            Coordinate to check for surrounding pieces
+	 * @return True if the coordinate is surrounded
+	 */
+	private boolean isCoordinateSurrounded(ConcreteHantoCoordinate center) {
+		ConcreteHantoCoordinate[] coords = center.getNeighborCoordinates();
+		int i = 0;
+		for (ConcreteHantoCoordinate coord : coords) {
+			if (board.containsKey(coord)) {
+				i++;
+			}
+		}
+		return i == 6;
+	}
+
+	/***********************
+	 * Helper Functions *
+	 ***********************/
 	@Override
 	public HantoPiece getPieceAt(ConcreteHantoCoordinate coord) {
 		return board.get(coord);
@@ -116,63 +197,4 @@ public class ConcreteHantoBoard implements HantoBoard {
 		return sb.toString();
 	}
 
-	@Override
-	public void checkCanPlacePiece(ConcreteHantoPiece piece, ConcreteHantoCoordinate to) throws HantoException {
-		if (!board.containsKey(to)) {
-			boolean hasValidNeighborPiece = false;
-			boolean hasInvalidNeighborPiece = false;
-			ConcreteHantoCoordinate[] neighbors = to.getNeighborCoordinates();
-			for (int i = 0; i < 6; i++) {
-				ConcreteHantoCoordinate neighbor = neighbors[i];
-				if (board.containsKey(neighbor)) {
-					if (validator.isValidNeighborPiece(piece, board.get(neighbor))) {
-						hasValidNeighborPiece = true;
-					} else {
-						hasInvalidNeighborPiece = true;
-					}
-				}
-			}
-
-			if (hasInvalidNeighborPiece) {
-				if (board.size() != 1) {
-
-					throw new HantoPlacementException("Cannot place next to enemy piece");
-				}
-
-			} else if (!hasValidNeighborPiece && board.size() != 0) {
-				throw new HantoException("No neighboring allied pieces!");
-			}
-
-		} else {
-			throw new HantoException("Destination already occupied");
-		}
-	}
-
-	@Override
-	public ConcreteHantoPiece checkMovePiece(HantoPlayerColor color, HantoPieceType pieceType,
-			ConcreteHantoCoordinate from, ConcreteHantoCoordinate to) throws HantoException {
-		ConcreteHantoPiece piece = board.get(from);
-
-		if (piece == null) {
-			throw new HantoException("Piece does not exist at this location");
-		}
-		if (piece.getColor() != color) {
-			throw new HantoException("Cannot move other player's piece.");
-		}
-		if (!piece.getType().equals(pieceType)) {
-			throw new HantoException("Incorrect piece type for the specified location");
-		}
-		piece.validateMove(board, from, to);
-		return board.get(from);
-	}
-
-	@Override
-	public void movePiece(ConcreteHantoPiece piece, ConcreteHantoCoordinate from, ConcreteHantoCoordinate to) {
-		board.remove(from);
-		board.put(to, piece);
-	}
-
-	public void setPlacementNeighborValidator(PlacementNeighborValidator validator) {
-		this.validator = validator;
-	}
 }

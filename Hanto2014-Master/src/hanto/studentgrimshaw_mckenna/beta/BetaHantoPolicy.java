@@ -12,7 +12,7 @@ package hanto.studentgrimshaw_mckenna.beta;
 
 import hanto.common.HantoGameID;
 import hanto.common.HantoPlayerColor;
-import hanto.studentgrimshaw_mckenna.common.AbstractHantoPolicy;
+import hanto.studentgrimshaw_mckenna.common.abstracts.AbstractHantoPolicy;
 
 /**
  * Beta Implementation of HantoPolicy. Starts the Players with one butterfly and
@@ -24,6 +24,14 @@ import hanto.studentgrimshaw_mckenna.common.AbstractHantoPolicy;
  */
 public class BetaHantoPolicy extends AbstractHantoPolicy {
 
+	/**
+	 * Default constructor for BetaHantoPolicy
+	 * 
+	 * @param id
+	 *            Id of the game
+	 * @param movesFirst
+	 *            The player who moves first
+	 */
 	public BetaHantoPolicy(HantoGameID id, HantoPlayerColor movesFirst) {
 		super(id, movesFirst);
 	}

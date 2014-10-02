@@ -3,10 +3,8 @@ package hanto.studentgrimshaw_mckenna.common.factories;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentgrimshaw_mckenna.beta.BetaHantoPlayer;
-import hanto.studentgrimshaw_mckenna.common.HantoPlayer;
-import hanto.studentgrimshaw_mckenna.delta.DeltaHantoPlayer;
-import hanto.studentgrimshaw_mckenna.gamma.GammaHantoPlayer;
+import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPlayer;
+import hanto.studentgrimshaw_mckenna.common.interfaces.HantoPlayer;
 
 import java.util.Map;
 
@@ -39,23 +37,10 @@ public class HantoPlayerFactory {
 	 */
 	public HantoPlayer makeHantoPlayer(HantoGameID gameId, HantoPlayerColor color,
 			Map<HantoPieceType, Integer> startingHand) {
-		HantoPlayer player = null;
-		switch (gameId) {
-		case BETA_HANTO:
-			player = new BetaHantoPlayer(color);
-			break;
-		case GAMMA_HANTO:
-			player = new GammaHantoPlayer(color);
-			break;
-		case DELTA_HANTO:
-			player = new DeltaHantoPlayer(color);
-			break;
-		default:
-			break;
-		}
-		if (player != null) {
-			player.setStartingHand(startingHand);
-		}
+		HantoPlayer player = new ConcreteHantoPlayer(color);
+
+		player.setStartingHand(startingHand);
+
 		return player;
 	}
 }

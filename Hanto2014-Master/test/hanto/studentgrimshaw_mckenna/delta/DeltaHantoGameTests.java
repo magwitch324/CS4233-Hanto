@@ -2,6 +2,7 @@ package hanto.studentgrimshaw_mckenna.delta;
 
 import static org.junit.Assert.assertEquals;
 import hanto.common.HantoException;
+import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
@@ -10,6 +11,7 @@ import hanto.common.HantoTestGame.PieceLocationPair;
 import hanto.common.HantoTestGameFactory;
 import hanto.common.MoveResult;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
+import hanto.studentgrimshaw_mckenna.common.factories.HantoGameFactory;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -197,6 +199,12 @@ public class DeltaHantoGameTests {
 		testGame.setTurnNumber(0);
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, new ConcreteHantoCoordinate(1, 0));
 
+	}
+	
+	@Test
+	public void createDeltaHantoGame() throws HantoException{
+		HantoGame game = HantoGameFactory.getInstance().makeHantoGame(HantoGameID.DELTA_HANTO);
+		game.makeMove(HantoPieceType.BUTTERFLY, null, coord(0,0));
 	}
 
 	private ConcreteHantoCoordinate coord(int x, int y) {

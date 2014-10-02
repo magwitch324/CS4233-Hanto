@@ -10,9 +10,9 @@
 
 package hanto.common;
 
-import hanto.studentgrimshaw_mckenna.common.HantoBoard;
-import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
 import hanto.studentgrimshaw_mckenna.common.factories.HantoBoardFactory;
+import hanto.studentgrimshaw_mckenna.common.interfaces.HantoBoard;
+import hanto.studentgrimshaw_mckenna.common.interfaces.HantoPolicy;
 import hanto.studentgrimshaw_mckenna.delta.DeltaHantoPolicy;
 import hanto.studentgrimshaw_mckenna.gamma.GammaHantoPolicy;
 

@@ -6,7 +6,7 @@ import java.util.Map;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentgrimshaw_mckenna.common.AbstractHantoPolicy;
+import hanto.studentgrimshaw_mckenna.common.abstracts.AbstractHantoPolicy;
 
 public class DeltaHantoPolicy extends AbstractHantoPolicy {
 

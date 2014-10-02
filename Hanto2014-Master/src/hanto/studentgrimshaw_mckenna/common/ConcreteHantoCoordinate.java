@@ -13,8 +13,8 @@ package hanto.studentgrimshaw_mckenna.common;
 import hanto.common.HantoCoordinate;
 
 /**
- * This class is the beta implementation of HantoCoordinate. It contains a x and
- * y coordinate and can return a list of the neighboring tiles
+ * This class is the concrete implementation of HantoCoordinate. It contains a x
+ * and y coordinate and can return a list of the neighboring tiles
  * 
  * @author Twgrimshaw
  * @author Remckenna
@@ -48,11 +48,18 @@ public class ConcreteHantoCoordinate implements HantoCoordinate {
 		x = hantoCoord.getX();
 		y = hantoCoord.getY();
 	}
-	
-	public static ConcreteHantoCoordinate makeFrom(HantoCoordinate hantoCoord){
+
+	/**
+	 * Creates a ConcreteHantoCoordinate from a HantoCoordinate
+	 * 
+	 * @param hantoCoord
+	 *            HantoCoordinate to convert
+	 * @return A ConcreteHantoCoordinate or null if hantoCoord is null
+	 */
+	public static ConcreteHantoCoordinate makeFrom(HantoCoordinate hantoCoord) {
 		ConcreteHantoCoordinate coord = null;
-		if(hantoCoord != null){
-			coord =  new ConcreteHantoCoordinate(hantoCoord);
+		if (hantoCoord != null) {
+			coord = new ConcreteHantoCoordinate(hantoCoord);
 		}
 		return coord;
 	}

@@ -19,7 +19,7 @@ import hanto.common.HantoPlayerColor;
 import hanto.studentgrimshaw_mckenna.common.validators.MoveValidator;
 
 /**
- * Alpha implementation of HantoPiece
+ * Concrete implementation of HantoPiece
  * 
  * @author Twgrimshaw
  * @author Remckenna
@@ -31,7 +31,7 @@ public class ConcreteHantoPiece implements HantoPiece {
 	private MoveValidator validator;
 
 	/**
-	 * Default constructor for AlphaHantoPiece.
+	 * Default constructor for ConcreteHantoPiece.
 	 * 
 	 * @param color
 	 *            Color of the piece
@@ -41,6 +41,50 @@ public class ConcreteHantoPiece implements HantoPiece {
 	public ConcreteHantoPiece(HantoPlayerColor color, HantoPieceType type) {
 		this.color = color;
 		this.type = type;
+	}
+
+	/**
+	 * Sets the validator for the piece
+	 * 
+	 * @param validator
+	 */
+	public void setValidator(MoveValidator validator) {
+		this.validator = validator;
+	}
+
+	/**
+	 * Validates that the piece is able to make the specified move
+	 * 
+	 * @param board
+	 *            The board containing all the pieces
+	 * @param from
+	 *            Original coordinate of the piece
+	 * @param to
+	 *            Desired destination
+	 * @throws HantoException
+	 *             If the move is invalid
+	 */
+	public void validateMove(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board, ConcreteHantoCoordinate from,
+			ConcreteHantoCoordinate to) throws HantoException {
+		validator.validateMove(board, from, to);
+
+	}
+
+	/**
+	 * Recursive function that checks to make sure that all pieces can be
+	 * reached after a move is made
+	 * 
+	 * @param board
+	 *            The board containing all the pieces
+	 * @param status
+	 *            Map containing the status of each piece
+	 * @param centerCoord
+	 *            Curretn coordinate
+	 */
+	public void checkSingleBlock(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
+			Map<ConcreteHantoCoordinate, Boolean> status, ConcreteHantoCoordinate centerCoord) {
+		validator.checkSingleBlock(board, status, centerCoord);
+
 	}
 
 	@Override
@@ -59,21 +103,5 @@ public class ConcreteHantoPiece implements HantoPiece {
 	public String toString() {
 		return "Color: " + color + "\tType: " + type;
 	}
-
-	public void validateMove(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board, ConcreteHantoCoordinate from,
-			ConcreteHantoCoordinate to) throws HantoException {
-		validator.validateMove(board, from, to);
-
-	}
-
-	public void setValidator(MoveValidator validator) {
-		this.validator = validator;
-	}
-
-	public void checkSingleBlock(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
-			Map<ConcreteHantoCoordinate, Boolean> status, ConcreteHantoCoordinate centerCoord) {
-		validator.checkSingleBlock(board, status, centerCoord);
-		
-	} 
 
 }

@@ -2,7 +2,7 @@ package hanto.studentgrimshaw_mckenna.gamma;
 
 import hanto.common.HantoGameID;
 import hanto.common.HantoPlayerColor;
-import hanto.studentgrimshaw_mckenna.common.AbstractHantoPolicy;
+import hanto.studentgrimshaw_mckenna.common.abstracts.AbstractHantoPolicy;
 
 public class GammaHantoPolicy extends AbstractHantoPolicy {
 

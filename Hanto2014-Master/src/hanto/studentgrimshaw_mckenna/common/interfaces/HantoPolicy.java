@@ -8,34 +8,25 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.studentgrimshaw_mckenna.beta;
+package hanto.studentgrimshaw_mckenna.common.interfaces;
 
-import hanto.common.HantoPlayerColor;
-import hanto.studentgrimshaw_mckenna.common.AbstractHantoPlayer;
+import hanto.common.HantoGameID;
 
 /**
- * Beta Implementation
+ * Stores any rules specific to the version of hanto game
  * 
  * @author Twgrimshaw
  * @author Remckenna
  *
  */
-public class BetaHantoPlayer extends AbstractHantoPlayer {
-	/**
-	 * The default constructor for BetaHantoPlayer
-	 * 
-	 * @param policy
-	 *            The game policy that gives the player their starting hand
-	 * @param color
-	 *            The color of the player
-	 */
-	public BetaHantoPlayer(HantoPlayerColor color) {
-		super(color);
-	}
-	
-	@Override
-	public boolean canMovePiece() {
-		return false;
-	}
+public interface HantoPolicy {
 
+	
+	HantoPlayer constructPlayer1();
+	HantoPlayer constructPlayer2();
+	
+	HantoGameID getId();
+	
+	int getMaxTurns();
+	
 }

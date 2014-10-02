@@ -2,7 +2,7 @@ package hanto.studentgrimshaw_mckenna.common.factories;
 
 import hanto.common.HantoGameID;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoBoard;
-import hanto.studentgrimshaw_mckenna.common.HantoBoard;
+import hanto.studentgrimshaw_mckenna.common.interfaces.HantoBoard;
 import hanto.studentgrimshaw_mckenna.common.validators.AllyNeighborPlacementValidator;
 import hanto.studentgrimshaw_mckenna.common.validators.AnyNeighborPlacementValidator;
 

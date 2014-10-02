@@ -2,8 +2,8 @@ package hanto.common;
 
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
-import hanto.studentgrimshaw_mckenna.common.HantoBoard;
-import hanto.studentgrimshaw_mckenna.common.HantoPolicy;
+import hanto.studentgrimshaw_mckenna.common.interfaces.HantoBoard;
+import hanto.studentgrimshaw_mckenna.common.interfaces.HantoPolicy;
 import hanto.studentgrimshaw_mckenna.gamma.GammaHantoGame;
 
 public class GammaHantoTestGame extends GammaHantoGame implements HantoTestGame {
