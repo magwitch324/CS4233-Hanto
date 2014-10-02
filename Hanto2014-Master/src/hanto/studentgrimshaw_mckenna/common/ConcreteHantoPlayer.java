@@ -67,7 +67,7 @@ public class ConcreteHantoPlayer implements HantoPlayer {
 	}
 
 	@Override
-	public boolean canMovePiece() {
+	public boolean canMovePieces() {
 		return hand.get(HantoPieceType.BUTTERFLY) == 0;
 	}
 

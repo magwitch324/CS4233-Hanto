@@ -33,15 +33,23 @@ public abstract class AbstractHantoPolicy implements HantoPolicy {
 	private HantoPlayerColor movesSecond;
 	private HantoGameID id;
 
+	/**
+	 * Default constructor for AbstractHantoPolicy
+	 * 
+	 * @param id
+	 *            Gave version
+	 * @param movesFirst
+	 *            The color of the player who moves first
+	 */
 	protected AbstractHantoPolicy(HantoGameID id, HantoPlayerColor movesFirst) {
 		this.id = id;
 		this.movesFirst = movesFirst;
-		movesSecond = movesFirst == HantoPlayerColor.BLUE ? HantoPlayerColor.RED
-				: HantoPlayerColor.BLUE;
+		movesSecond = movesFirst == HantoPlayerColor.BLUE ? HantoPlayerColor.RED : HantoPlayerColor.BLUE;
 	}
 
 	/**
 	 * Gets the starting based on the rules in the policy
+	 * 
 	 * @return The starting hand
 	 */
 	protected Map<HantoPieceType, Integer> getStartingHand() {
@@ -56,15 +64,13 @@ public abstract class AbstractHantoPolicy implements HantoPolicy {
 
 	@Override
 	public HantoPlayer constructPlayer1() {
-		HantoPlayer player1 = HantoPlayerFactory.getInstance().makeHantoPlayer(
-				id, movesFirst, getStartingHand());
+		HantoPlayer player1 = HantoPlayerFactory.getInstance().makeHantoPlayer(id, movesFirst, getStartingHand());
 		return player1;
 	}
 
 	@Override
 	public HantoPlayer constructPlayer2() {
-		HantoPlayer player2 = HantoPlayerFactory.getInstance().makeHantoPlayer(
-				id, movesSecond, getStartingHand());
+		HantoPlayer player2 = HantoPlayerFactory.getInstance().makeHantoPlayer(id, movesSecond, getStartingHand());
 		return player2;
 	}
 

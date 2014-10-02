@@ -88,11 +88,13 @@ public class ConcreteHantoBoard implements HantoBoard {
 	}
 
 	/***********************
-	 * Movement Functions *
+	 * Movement Functions
+	 * 
+	 * @return *
 	 ***********************/
 	@Override
-	public ConcreteHantoPiece checkMovePiece(HantoPlayerColor color, HantoPieceType pieceType,
-			ConcreteHantoCoordinate from, ConcreteHantoCoordinate to) throws HantoException {
+	public void checkMovePiece(HantoPlayerColor color, HantoPieceType pieceType, ConcreteHantoCoordinate from,
+			ConcreteHantoCoordinate to) throws HantoException {
 		ConcreteHantoPiece piece = board.get(from);
 
 		if (piece == null) {
@@ -105,11 +107,11 @@ public class ConcreteHantoBoard implements HantoBoard {
 			throw new HantoException("Incorrect piece type for the specified location");
 		}
 		piece.validateMove(board, from, to);
-		return board.get(from);
 	}
 
 	@Override
-	public void movePiece(ConcreteHantoPiece piece, ConcreteHantoCoordinate from, ConcreteHantoCoordinate to) {
+	public void movePiece(ConcreteHantoCoordinate from, ConcreteHantoCoordinate to) {
+		ConcreteHantoPiece piece = board.get(from);
 		board.remove(from);
 		board.put(to, piece);
 	}

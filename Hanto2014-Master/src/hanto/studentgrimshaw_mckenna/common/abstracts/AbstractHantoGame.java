@@ -19,7 +19,7 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
-import hanto.studentgrimshaw_mckenna.common.factories.PieceFactory;
+import hanto.studentgrimshaw_mckenna.common.factories.HantoPieceFactory;
 import hanto.studentgrimshaw_mckenna.common.interfaces.HantoBoard;
 import hanto.studentgrimshaw_mckenna.common.interfaces.HantoPlayer;
 import hanto.studentgrimshaw_mckenna.common.interfaces.HantoPolicy;
@@ -39,7 +39,7 @@ public abstract class AbstractHantoGame implements HantoGame {
 	protected int turnNumber;
 
 	// Game objects
-	protected PieceFactory pieceFactory;
+	protected HantoPieceFactory pieceFactory;
 	protected HantoBoard board;
 
 	// Player variables
@@ -59,7 +59,7 @@ public abstract class AbstractHantoGame implements HantoGame {
 
 		// create game environment
 		this.board = board;
-		pieceFactory = new PieceFactory(policy.getId());
+		pieceFactory = new HantoPieceFactory(policy.getId());
 		maxTurns = policy.getMaxTurns();
 
 		// Create players
@@ -184,11 +184,11 @@ public abstract class AbstractHantoGame implements HantoGame {
 	 */
 	protected void movePiece(HantoPieceType pieceType, ConcreteHantoCoordinate from, ConcreteHantoCoordinate to)
 			throws HantoException {
-		if (!activePlayer.canMovePiece()) {
+		if (!activePlayer.canMovePieces()) {
 			throw new HantoException("Player may not move pieces untill butterfly is placed");
 		}
-		ConcreteHantoPiece piece = board.checkMovePiece(activePlayer.getColor(), pieceType, from, to);
-		board.movePiece(piece, from, to);
+		board.checkMovePiece(activePlayer.getColor(), pieceType, from, to);
+		board.movePiece(from, to);
 	}
 
 	/**

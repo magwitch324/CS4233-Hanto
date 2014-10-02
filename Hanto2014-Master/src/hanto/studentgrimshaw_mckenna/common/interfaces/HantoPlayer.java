@@ -25,10 +25,18 @@ import hanto.common.HantoPlayerColor;
 public interface HantoPlayer {
 
 	/**
+	 * Sets the player's starting hand
+	 * 
+	 * @param startingHand
+	 *            Hand of pieces
+	 */
+	void setStartingHand(Map<HantoPieceType, Integer> startingHand);
+
+	/**
 	 * Determines whether or not the player can place the specified piece
 	 * 
-	 * @param halfTurns
-	 *            Half turns that have taken place so far
+	 * @param turnNumber
+	 *            Turns that have taken place so far
 	 * @param type
 	 *            Type of the piece looking to be placed
 	 * @return True if the player can place the piece
@@ -36,11 +44,11 @@ public interface HantoPlayer {
 	boolean canPlacePiece(int turnNumber, HantoPieceType type);
 
 	/**
-	 * Gets the color associated with the player
+	 * Determines if the player can move pieces
 	 * 
-	 * @return The player's color
+	 * @return True if the butterfly has been placed
 	 */
-	HantoPlayerColor getColor();
+	boolean canMovePieces();
 
 	/**
 	 * Decreases the piece count in the players hand for the specified piece
@@ -51,7 +59,11 @@ public interface HantoPlayer {
 	 */
 	void decrementPieceCount(HantoPieceType pieceType);
 
-	void setStartingHand(Map<HantoPieceType, Integer> startingHand);
+	/**
+	 * Gets the color associated with the player
+	 * 
+	 * @return The player's color
+	 */
+	HantoPlayerColor getColor();
 
-	boolean canMovePiece();
 }

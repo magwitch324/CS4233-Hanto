@@ -13,7 +13,7 @@ package hanto.studentgrimshaw_mckenna.common.interfaces;
 import hanto.common.HantoGameID;
 
 /**
- * Stores any rules specific to the version of hanto game
+ * Interface for storing any rules specific to the version of hanto game
  * 
  * @author Twgrimshaw
  * @author Remckenna
@@ -21,12 +21,32 @@ import hanto.common.HantoGameID;
  */
 public interface HantoPolicy {
 
-	
+	/**
+	 * Constructs player 1
+	 * 
+	 * @return Player1
+	 */
 	HantoPlayer constructPlayer1();
+
+	/**
+	 * Constructs player 2
+	 * 
+	 * @return Player2
+	 */
 	HantoPlayer constructPlayer2();
-	
+
+	/**
+	 * Gets the game version
+	 * 
+	 * @return Game Version
+	 */
 	HantoGameID getId();
-	
+
+	/**
+	 * Gets the maximum number of turns allowed
+	 * 
+	 * @return maxTurns
+	 */
 	int getMaxTurns();
-	
+
 }
