@@ -28,6 +28,19 @@ public class DeltaHantoGameTests {
 	}
 
 	@Test
+	public void checkForBlueResignation() throws HantoException {
+		MoveResult result = testGame.makeMove(null, null, null);
+		assertEquals(MoveResult.RED_WINS, result);
+	}
+
+	@Test
+	public void checkForRedResignation() throws HantoException {
+		testGame.makeMove(HantoPieceType.BUTTERFLY, null, new ConcreteHantoCoordinate(0, 0));
+		MoveResult result = testGame.makeMove(null, null, null);
+		assertEquals(MoveResult.BLUE_WINS, result);
+	}
+	
+	@Test
 	public void canPlaceCrab() throws HantoException {
 		testGame.makeMove(HantoPieceType.CRAB, null, new ConcreteHantoCoordinate(0, 0));
 
