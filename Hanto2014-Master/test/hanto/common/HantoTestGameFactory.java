@@ -22,7 +22,7 @@ import hanto.studentgrimshaw_mckenna.gamma.GammaHantoPolicy;
  * @version Sep 22, 2014
  */
 public class HantoTestGameFactory {
-	private static final HantoTestGameFactory instance = new HantoTestGameFactory();
+	private static final HantoTestGameFactory INSTANCE = new HantoTestGameFactory();
 
 	/**
 	 * Default private descriptor.
@@ -35,7 +35,7 @@ public class HantoTestGameFactory {
 	 * @return the instance
 	 */
 	public static HantoTestGameFactory getInstance() {
-		return instance;
+		return INSTANCE;
 	}
 
 	/**

@@ -30,7 +30,9 @@ public class HantoPieceFactory {
 
 	/**
 	 * Factory constructor
-	 * @param id Game version
+	 * 
+	 * @param id
+	 *            Game version
 	 */
 	public HantoPieceFactory(HantoGameID id) {
 		this.id = id;

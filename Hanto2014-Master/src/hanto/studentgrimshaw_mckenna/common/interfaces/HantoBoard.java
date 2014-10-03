@@ -17,6 +17,7 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
+import hanto.studentgrimshaw_mckenna.common.validators.PlacementNeighborValidator;
 
 /**
  * Interface for the board used in hanto game. Holds and handles information

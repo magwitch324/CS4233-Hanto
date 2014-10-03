@@ -39,7 +39,7 @@ public class DeltaHantoGameTests {
 		MoveResult result = testGame.makeMove(null, null, null);
 		assertEquals(MoveResult.BLUE_WINS, result);
 	}
-	
+
 	@Test
 	public void canPlaceCrab() throws HantoException {
 		testGame.makeMove(HantoPieceType.CRAB, null, new ConcreteHantoCoordinate(0, 0));
@@ -205,7 +205,6 @@ public class DeltaHantoGameTests {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[1];
 		initialPieces[0] = new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
 				new ConcreteHantoCoordinate(0, 0));
-		;
 
 		testGame.initializeBoard(initialPieces);
 		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
@@ -213,11 +212,11 @@ public class DeltaHantoGameTests {
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, new ConcreteHantoCoordinate(1, 0));
 
 	}
-	
+
 	@Test
-	public void createDeltaHantoGame() throws HantoException{
+	public void createDeltaHantoGame() throws HantoException {
 		HantoGame game = HantoGameFactory.getInstance().makeHantoGame(HantoGameID.DELTA_HANTO);
-		game.makeMove(HantoPieceType.BUTTERFLY, null, coord(0,0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, coord(0, 0));
 	}
 
 	private ConcreteHantoCoordinate coord(int x, int y) {

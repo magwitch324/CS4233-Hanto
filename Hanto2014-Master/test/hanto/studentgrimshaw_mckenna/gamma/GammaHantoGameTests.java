@@ -15,7 +15,6 @@ import hanto.common.HantoTestGame.PieceLocationPair;
 import hanto.common.HantoTestGameFactory;
 import hanto.common.MoveResult;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
-import hanto.studentgrimshaw_mckenna.common.exceptions.HantoPlacementException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -187,7 +186,7 @@ public class GammaHantoGameTests {
 				new ConcreteHantoCoordinate(2, 0));
 	}
 
-	@Test(expected = HantoPlacementException.class)
+	@Test(expected = HantoException.class)
 	public void tryPlaceNextToEnemy() throws HantoException {
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, new ConcreteHantoCoordinate(0, 0));
 		testGame.makeMove(HantoPieceType.SPARROW, null, new ConcreteHantoCoordinate(1, 0));

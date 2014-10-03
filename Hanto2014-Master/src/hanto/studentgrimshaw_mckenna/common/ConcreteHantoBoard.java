@@ -15,9 +15,8 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentgrimshaw_mckenna.common.exceptions.HantoPlacementException;
 import hanto.studentgrimshaw_mckenna.common.interfaces.HantoBoard;
-import hanto.studentgrimshaw_mckenna.common.interfaces.PlacementNeighborValidator;
+import hanto.studentgrimshaw_mckenna.common.validators.PlacementNeighborValidator;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -72,7 +71,7 @@ public class ConcreteHantoBoard implements HantoBoard {
 
 			if (hasInvalidNeighborPiece) {
 				if (board.size() != 1) {
-					throw new HantoPlacementException("Cannot place next to enemy piece");
+					throw new HantoException("Cannot place next to enemy piece");
 				}
 			} else if (!hasValidNeighborPiece && board.size() != 0) {
 				throw new HantoException("No neighboring allied pieces!");

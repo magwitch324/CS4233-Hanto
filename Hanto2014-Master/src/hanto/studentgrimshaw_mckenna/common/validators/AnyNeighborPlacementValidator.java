@@ -11,7 +11,6 @@
 package hanto.studentgrimshaw_mckenna.common.validators;
 
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
-import hanto.studentgrimshaw_mckenna.common.interfaces.PlacementNeighborValidator;
 
 /**
  * Placement validator for placing next to any piece
