@@ -66,4 +66,6 @@ public interface HantoPlayer {
 	 */
 	HantoPlayerColor getColor();
 
+	boolean isHandEmpty();
+
 }

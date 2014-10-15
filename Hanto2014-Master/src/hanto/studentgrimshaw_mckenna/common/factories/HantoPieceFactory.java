@@ -15,6 +15,7 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
 import hanto.studentgrimshaw_mckenna.common.validators.FlyMoveValidator;
+import hanto.studentgrimshaw_mckenna.common.validators.JumpMoveValidator;
 import hanto.studentgrimshaw_mckenna.common.validators.WalkMoveValidator;
 
 /**
@@ -59,6 +60,8 @@ public class HantoPieceFactory {
 		case DELTA_HANTO:
 			piece = createDeltaPiece(color, type);
 			break;
+		case EPSILON_HANTO:
+			piece = createEpsilonPiece(color, type);
 		default:
 			break;
 		}
@@ -111,6 +114,35 @@ public class HantoPieceFactory {
 			break;
 		case SPARROW:
 			piece.setValidator(new FlyMoveValidator());
+			break;
+		default:
+			break;
+		}
+		return piece;
+	}
+	
+	
+	/**
+	 * Creates EpsilonHanto pieces
+	 * 
+	 * @param color
+	 *            Color of the piece
+	 * @param type
+	 *            Type of piece to create
+	 * @return A correctly configured piece
+	 */
+	private ConcreteHantoPiece createEpsilonPiece(HantoPlayerColor color, HantoPieceType type) {
+		ConcreteHantoPiece piece = new ConcreteHantoPiece(color, type);
+		switch (type) {
+		case BUTTERFLY:
+		case CRAB:
+			piece.setValidator(new WalkMoveValidator());
+			break;
+		case SPARROW:
+			piece.setValidator(new FlyMoveValidator(4));
+			break;
+		case HORSE:
+			piece.setValidator(new JumpMoveValidator());
 			break;
 		default:
 			break;

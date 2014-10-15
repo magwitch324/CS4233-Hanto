@@ -10,9 +10,14 @@
 
 package hanto.studentgrimshaw_mckenna.common.validators;
 
+import hanto.common.HantoException;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
+import hanto.tournament.HantoMoveRecord;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,10 +29,44 @@ import java.util.Map;
  */
 public class FlyMoveValidator extends MoveValidator {
 
+	int maxDistance;
+
+	public FlyMoveValidator(int maxDistance) {
+		this.maxDistance = maxDistance;
+	}
+
+	public FlyMoveValidator() {
+		maxDistance = Integer.MAX_VALUE;
+	}
+
 	@Override
 	protected void checkDestinationReachable(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
-			ConcreteHantoCoordinate from, ConcreteHantoCoordinate to) {
-		// Flying can reach any destination
+			ConcreteHantoCoordinate from, ConcreteHantoCoordinate to) throws HantoException {
+		int distance = from.getDistance(to);
+
+		if (distance > maxDistance) {
+			throw new HantoException("Distance is greater than allowed " + maxDistance);
+		}
+	}
+
+	@Override
+	public List<HantoMoveRecord> checkNoMoveAvailable(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
+			ConcreteHantoCoordinate currentPosition) {
+		List<HantoMoveRecord> availableMoves = new ArrayList<HantoMoveRecord>();
+		Iterator<Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece>> it = board.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece> pair = it.next();
+			for (ConcreteHantoCoordinate coord : pair.getKey().getNeighborCoordinates()) {
+				try {
+					validateMove(board, currentPosition, coord);
+					availableMoves
+							.add(new HantoMoveRecord(board.get(currentPosition).getType(), currentPosition, coord));
+				} catch (HantoException e) {
+					e.getMessage();
+				}
+			}
+		}
+		return availableMoves;
 	}
 
 }

@@ -16,6 +16,7 @@ import hanto.common.HantoGame;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.HantoPrematureResignationException;
 import hanto.common.MoveResult;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
@@ -34,7 +35,7 @@ import hanto.studentgrimshaw_mckenna.common.interfaces.HantoPolicy;
 public abstract class AbstractHantoGame implements HantoGame {
 
 	// Game state variables
-	private boolean gameOver;
+	protected boolean gameOver;
 	private int maxTurns;
 	protected int turnNumber;
 
@@ -118,8 +119,9 @@ public abstract class AbstractHantoGame implements HantoGame {
 	 * @param hTo
 	 *            Null if resigning.
 	 * @return The move result.
+	 * @throws HantoException 
 	 */
-	protected MoveResult checkResigning(HantoPieceType pieceType, HantoCoordinate hFrom, HantoCoordinate hTo) {
+	protected MoveResult checkResigning(HantoPieceType pieceType, HantoCoordinate hFrom, HantoCoordinate hTo) throws HantoPrematureResignationException {
 		MoveResult result = null;
 
 		if (pieceType == null && hFrom == null && hTo == null) {

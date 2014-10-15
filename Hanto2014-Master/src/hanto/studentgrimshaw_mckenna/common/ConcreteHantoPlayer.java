@@ -76,4 +76,15 @@ public class ConcreteHantoPlayer implements HantoPlayer {
 		return color;
 	}
 
+	@Override
+	public boolean isHandEmpty() {
+		boolean isEmpty = true;
+		for(int num : hand.values()){
+			if(num > 0){
+				isEmpty = false;
+			}
+		}
+		return isEmpty;
+	}
+
 }

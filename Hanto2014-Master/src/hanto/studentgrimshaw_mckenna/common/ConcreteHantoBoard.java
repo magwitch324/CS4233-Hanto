@@ -16,10 +16,13 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentgrimshaw_mckenna.common.interfaces.HantoBoard;
-import hanto.studentgrimshaw_mckenna.common.validators.PlacementNeighborValidator;
+import hanto.studentgrimshaw_mckenna.common.interfaces.PlacementNeighborValidator;
+import hanto.tournament.HantoMoveRecord;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -196,6 +199,61 @@ public class ConcreteHantoBoard implements HantoBoard {
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	public List<HantoMoveRecord> checkPlayerHasAvailableMove(HantoPlayerColor playerColor) {
+		List<HantoMoveRecord> availableMoves = new ArrayList<HantoMoveRecord>();
+		Iterator<Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece>> it = board.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece> pair = it.next();
+			ConcreteHantoPiece piece = pair.getValue();
+			if (piece.getColor() == playerColor) {
+				availableMoves.addAll(piece.checkCanMakeMove(board, pair.getKey()));
+			}
+		}
+		return availableMoves;
+	}
+
+	@Override
+	public List<ConcreteHantoCoordinate> getAvailablePlacementPlace(HantoPlayerColor color, int turnNumber) {
+		List<ConcreteHantoCoordinate> availablePlacements = new ArrayList<ConcreteHantoCoordinate>();
+		Iterator<Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece>> it = board.entrySet().iterator();
+
+		if (turnNumber == 1) {
+			availablePlacements.addAll(getFirstTurnPlacements());
+		} else {
+
+			while (it.hasNext()) {
+				Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece> pair = it.next();
+				ConcreteHantoPiece piece = pair.getValue();
+				if (piece.getColor() == color) {
+					for (ConcreteHantoCoordinate coord : pair.getKey().getNeighborCoordinates()) {
+						try {
+							checkCanPlacePiece(piece, coord);
+							availablePlacements.add(coord);
+						} catch (HantoException e) {
+							e.getMessage();
+						}
+					}
+				}// if color
+			}// while
+		}
+		return availablePlacements;
+
+	}
+
+	private List<ConcreteHantoCoordinate> getFirstTurnPlacements() {
+		List<ConcreteHantoCoordinate> availablePlacements = new ArrayList<ConcreteHantoCoordinate>();
+		ConcreteHantoCoordinate zero = new ConcreteHantoCoordinate(0, 0);
+		if (board.size() == 0) {
+			availablePlacements.add(zero);
+		} else {
+			for (ConcreteHantoCoordinate coord : zero.getNeighborCoordinates()) {
+				availablePlacements.add(coord);
+			}
+		}
+		return availablePlacements;
 	}
 
 }

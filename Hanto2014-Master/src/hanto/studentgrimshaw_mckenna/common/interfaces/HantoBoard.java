@@ -17,7 +17,9 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
-import hanto.studentgrimshaw_mckenna.common.validators.PlacementNeighborValidator;
+import hanto.tournament.HantoMoveRecord;
+
+import java.util.List;
 
 /**
  * Interface for the board used in hanto game. Holds and handles information
@@ -108,4 +110,8 @@ public interface HantoBoard {
 	 * @return The string representing the board
 	 */
 	String getPrintableBoard();
+
+	List<HantoMoveRecord> checkPlayerHasAvailableMove(HantoPlayerColor playerColor);
+
+	List<ConcreteHantoCoordinate> getAvailablePlacementPlace(HantoPlayerColor color, int turnNumber);
 }

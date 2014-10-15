@@ -191,7 +191,7 @@ public class GammaHantoGameTests {
 		testGame.makeMove(HantoPieceType.BUTTERFLY, null, new ConcreteHantoCoordinate(0, 0));
 		testGame.makeMove(HantoPieceType.SPARROW, null, new ConcreteHantoCoordinate(1, 0));
 
-		testGame.makeMove(HantoPieceType.SPARROW, null, new ConcreteHantoCoordinate(2, 0));
+		testGame.makeMove(HantoPieceType.SPARROW, null, new ConcreteHantoCoordinate(0, 1));
 	}
 
 }

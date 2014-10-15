@@ -10,13 +10,15 @@
 
 package hanto.studentgrimshaw_mckenna.common;
 
-import java.util.Map;
-
 import hanto.common.HantoException;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentgrimshaw_mckenna.common.validators.MoveValidator;
+import hanto.tournament.HantoMoveRecord;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Concrete implementation of HantoPiece
@@ -102,6 +104,12 @@ public class ConcreteHantoPiece implements HantoPiece {
 	@Override
 	public String toString() {
 		return "Color: " + color + "\tType: " + type;
+	}
+
+	public List<HantoMoveRecord> checkCanMakeMove(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board, ConcreteHantoCoordinate currentPosition) {
+		return validator.checkNoMoveAvailable(board, currentPosition);
+		
+		
 	}
 
 }

@@ -13,8 +13,10 @@ package hanto.studentgrimshaw_mckenna.common.validators;
 import hanto.common.HantoException;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoCoordinate;
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
+import hanto.tournament.HantoMoveRecord;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -140,4 +142,7 @@ public abstract class MoveValidator {
 	 */
 	protected abstract void checkDestinationReachable(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
 			ConcreteHantoCoordinate from, ConcreteHantoCoordinate to) throws HantoException;
+
+	public abstract List<HantoMoveRecord> checkNoMoveAvailable(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
+			ConcreteHantoCoordinate currentPosition);
 }

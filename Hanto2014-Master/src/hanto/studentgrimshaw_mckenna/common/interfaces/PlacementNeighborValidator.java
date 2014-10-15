@@ -8,23 +8,28 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.studentgrimshaw_mckenna.common.validators;
+package hanto.studentgrimshaw_mckenna.common.interfaces;
 
 import hanto.studentgrimshaw_mckenna.common.ConcreteHantoPiece;
-import hanto.studentgrimshaw_mckenna.common.interfaces.PlacementNeighborValidator;
 
 /**
- * Placement validator for placing next to any piece
+ * Interface for placement validators
  * 
  * @author Twgrimshaw
  * @author Remckenna
  *
  */
-public class AnyNeighborPlacementValidator implements PlacementNeighborValidator {
+public interface PlacementNeighborValidator {
 
-	@Override
-	public boolean isValidNeighborPiece(ConcreteHantoPiece piece, ConcreteHantoPiece neighbor) {
-		return true;
-	}
+	/**
+	 * Determines if the neighboring piece is valid or not
+	 * 
+	 * @param piece
+	 *            Current piece
+	 * @param neighbor
+	 *            Neighboring piece
+	 * @return True if the neighbor is valid
+	 */
+	boolean isValidNeighborPiece(ConcreteHantoPiece piece, ConcreteHantoPiece neighbor);
 
 }

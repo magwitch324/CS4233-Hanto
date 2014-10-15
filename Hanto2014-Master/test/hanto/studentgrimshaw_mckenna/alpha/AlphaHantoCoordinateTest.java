@@ -10,12 +10,11 @@
 
 package hanto.studentgrimshaw_mckenna.alpha;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import hanto.common.HantoCoordinate;
 
 import java.util.GregorianCalendar;
-
-import hanto.common.HantoCoordinate;
-import hanto.studentgrimshaw_mckenna.alpha.AlphaHantoCoordinate;
 
 import org.junit.Test;
 
