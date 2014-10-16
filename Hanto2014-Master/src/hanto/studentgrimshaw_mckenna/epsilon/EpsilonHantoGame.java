@@ -41,14 +41,14 @@ public class EpsilonHantoGame extends AbstractHantoGame {
 		MoveResult result = super.checkResigning(pieceType, hFrom, hTo);
 		if (result != null) {
 			if (!activePlayer.isHandEmpty()) {
-				List<ConcreteHantoCoordinate> availablePlacements = board.getAvailablePlacementPlace(
+				List<ConcreteHantoCoordinate> availablePlacements = board.getPlayersAvailablePlacements(
 						activePlayer.getColor(), turnNumber);
 				if (availablePlacements.size() > 0) {
 					throw new HantoPrematureResignationException();
 				}
 			}
 
-			List<HantoMoveRecord> availableMoves = board.checkPlayerHasAvailableMove(activePlayer.getColor());
+			List<HantoMoveRecord> availableMoves = board.getPlayersAvailableMoves(activePlayer.getColor());
 			if (availableMoves.size() > 0) {
 				throw new HantoPrematureResignationException();
 			}

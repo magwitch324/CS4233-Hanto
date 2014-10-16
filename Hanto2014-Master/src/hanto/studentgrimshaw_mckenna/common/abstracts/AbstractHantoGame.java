@@ -119,9 +119,10 @@ public abstract class AbstractHantoGame implements HantoGame {
 	 * @param hTo
 	 *            Null if resigning.
 	 * @return The move result.
-	 * @throws HantoException 
+	 * @throws HantoPrematureResignationException
 	 */
-	protected MoveResult checkResigning(HantoPieceType pieceType, HantoCoordinate hFrom, HantoCoordinate hTo) throws HantoPrematureResignationException {
+	protected MoveResult checkResigning(HantoPieceType pieceType, HantoCoordinate hFrom, HantoCoordinate hTo)
+			throws HantoPrematureResignationException {
 		MoveResult result = null;
 
 		if (pieceType == null && hFrom == null && hTo == null) {

@@ -10,7 +10,7 @@ public class EpsilonHantoTestGame extends EpsilonHantoGame implements HantoTestG
 
 	public EpsilonHantoTestGame(HantoPolicy policy, HantoBoard board) {
 		super(policy, board);
-		}
+	}
 
 	@Override
 	public void initializeBoard(PieceLocationPair[] initialPieces) {

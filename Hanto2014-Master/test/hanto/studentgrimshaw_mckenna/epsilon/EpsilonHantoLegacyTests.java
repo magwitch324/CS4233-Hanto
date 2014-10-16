@@ -443,9 +443,6 @@ public class EpsilonHantoLegacyTests {
 	private PieceLocationPair plPair(HantoPlayerColor player, HantoPieceType pieceType, int x, int y) {
 		return new PieceLocationPair(player, pieceType, new TestHantoCoordinate(x, y));
 	}
-	
-
-
 
 	@Test
 	public void canPlaceCrab() throws HantoException {
@@ -584,51 +581,42 @@ public class EpsilonHantoLegacyTests {
 		return new ConcreteHantoCoordinate(x, y);
 	}
 
-
 	@Test
-	public void bluePlacesButterflyFirst() throws HantoException
-	{
+	public void bluePlacesButterflyFirst() throws HantoException {
 		final MoveResult mr = testGame.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
 		assertEquals(OK, mr);
 		final HantoPiece piece = testGame.getPieceAt(makeCoordinate(0, 0));
 		assertEquals(BLUE, piece.getColor());
 		assertEquals(BUTTERFLY, piece.getType());
 	}
-	
-	@Test(expected=HantoException.class)
-	public void attemptToMoveAfterGameIsOver() throws HantoException
-	{
-		final PieceLocationPair[] board = new PieceLocationPair[] {
-			    plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
-			    plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1),
-			    plPair(BLUE, SPARROW, -1, 1), plPair(RED, SPARROW, 0, -1),
-			    plPair(RED, CRAB, 1, 1)
-			    
+
+	@Test(expected = HantoException.class)
+	public void attemptToMoveAfterGameIsOver() throws HantoException {
+		final PieceLocationPair[] board = new PieceLocationPair[] { plPair(BLUE, BUTTERFLY, 0, 0),
+				plPair(RED, BUTTERFLY, 0, 1), plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1),
+				plPair(BLUE, SPARROW, -1, 1), plPair(RED, SPARROW, 0, -1), plPair(RED, CRAB, 1, 1)
+
 		};
 		testGame.initializeBoard(board);
 		testGame.setPlayerMoving(RED);
-		testGame.makeMove(CRAB, makeCoordinate(1, 1), makeCoordinate(1, 0));	// RED wins
+		testGame.makeMove(CRAB, makeCoordinate(1, 1), makeCoordinate(1, 0)); // RED
+																				// wins
 		testGame.makeMove(SPARROW, makeCoordinate(-1, 1), makeCoordinate(-1, 2));
 	}
-	
+
 	@Test
-	public void placeACrab() throws HantoException
-	{
+	public void placeACrab() throws HantoException {
 		assertEquals(OK, testGame.makeMove(CRAB, null, makeCoordinate(0, 0)));
 		final HantoPiece hp = testGame.getPieceAt(makeCoordinate(0, 0));
 		assertEquals(BLUE, hp.getColor());
 		assertEquals(CRAB, hp.getType());
 	}
-	
+
 	@Test
-	public void sparrowFliesMoreThanOneSpace() throws HantoException
-	{
-		final PieceLocationPair[] board = new PieceLocationPair[] {
-			    plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
-			    plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1),
-			    plPair(BLUE, SPARROW, -1, 1), plPair(RED, SPARROW, 0, -1),
-			    plPair(RED, SPARROW, 1, 1)
-		};
+	public void sparrowFliesMoreThanOneSpace() throws HantoException {
+		final PieceLocationPair[] board = new PieceLocationPair[] { plPair(BLUE, BUTTERFLY, 0, 0),
+				plPair(RED, BUTTERFLY, 0, 1), plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1),
+				plPair(BLUE, SPARROW, -1, 1), plPair(RED, SPARROW, 0, -1), plPair(RED, SPARROW, 1, 1) };
 		testGame.initializeBoard(board);
 		testGame.setTurnNumber(4);
 		assertEquals(OK, testGame.makeMove(SPARROW, makeCoordinate(-1, 0), makeCoordinate(2, 1)));
@@ -636,55 +624,44 @@ public class EpsilonHantoLegacyTests {
 		assertEquals(BLUE, hp.getColor());
 		assertEquals(SPARROW, hp.getType());
 	}
-	
-	@Test(expected=HantoException.class)
-	public void sparrowFliesToInvalidLocation() throws HantoException
-	{
-		final PieceLocationPair[] board = new PieceLocationPair[] {
-			    plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
-			    plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1)
-		};
+
+	@Test(expected = HantoException.class)
+	public void sparrowFliesToInvalidLocation() throws HantoException {
+		final PieceLocationPair[] board = new PieceLocationPair[] { plPair(BLUE, BUTTERFLY, 0, 0),
+				plPair(RED, BUTTERFLY, 0, 1), plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1) };
 		testGame.initializeBoard(board);
 		testGame.setTurnNumber(3);
 		testGame.makeMove(SPARROW, makeCoordinate(-1, 0), makeCoordinate(0, 3));
 	}
-	
-	@Test(expected=HantoException.class)
-	public void crabWalksAndCreatesDisconnectedConfiguration() throws HantoException
-	{
-		final PieceLocationPair[] board = new PieceLocationPair[] {
-			    plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
-			    plPair(BLUE, SPARROW, -1, 0), plPair(RED, CRAB, 1, 0),
-			    plPair(BLUE, SPARROW, -2, 0), plPair(RED, SPARROW, 2, 0),
-			    plPair(BLUE, SPARROW, -3, 0)
-		};
+
+	@Test(expected = HantoException.class)
+	public void crabWalksAndCreatesDisconnectedConfiguration() throws HantoException {
+		final PieceLocationPair[] board = new PieceLocationPair[] { plPair(BLUE, BUTTERFLY, 0, 0),
+				plPair(RED, BUTTERFLY, 0, 1), plPair(BLUE, SPARROW, -1, 0), plPair(RED, CRAB, 1, 0),
+				plPair(BLUE, SPARROW, -2, 0), plPair(RED, SPARROW, 2, 0), plPair(BLUE, SPARROW, -3, 0) };
 		testGame.initializeBoard(board);
 		testGame.setTurnNumber(4);
 		testGame.setPlayerMoving(RED);
 		testGame.makeMove(CRAB, makeCoordinate(1, 0), makeCoordinate(1, -1));
 	}
-	
-	@Test(expected=HantoException.class)
-	public void attemptToUsePieceNotInGame() throws HantoException
-	{
+
+	@Test(expected = HantoException.class)
+	public void attemptToUsePieceNotInGame() throws HantoException {
 		testGame.makeMove(CRANE, null, makeCoordinate(0, 0));
 	}
-	
-	@Test
-	public void moveByFlying() throws HantoException
-	{
 
-		final PieceLocationPair[] board = new PieceLocationPair[] {
-			    plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
-			    plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1),
-			    plPair(BLUE, SPARROW, -1, 1), plPair(RED, SPARROW, 0, -1),
-			    plPair(RED, SPARROW, -2, 1)
-			    
+	@Test
+	public void moveByFlying() throws HantoException {
+
+		final PieceLocationPair[] board = new PieceLocationPair[] { plPair(BLUE, BUTTERFLY, 0, 0),
+				plPair(RED, BUTTERFLY, 0, 1), plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1),
+				plPair(BLUE, SPARROW, -1, 1), plPair(RED, SPARROW, 0, -1), plPair(RED, SPARROW, -2, 1)
+
 		};
 		testGame.initializeBoard(board);
 		testGame.setPlayerMoving(RED);
 		testGame.setTurnNumber(4);
 		assertEquals(RED_WINS, testGame.makeMove(SPARROW, makeCoordinate(-2, 1), makeCoordinate(1, 0)));
 	}
-	
+
 }

@@ -23,7 +23,7 @@ public class EpsilonHantoGameTests {
 	public void setUp() throws Exception {
 		testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.EPSILON_HANTO);
 	}
-	
+
 	@Test(expected = HantoException.class)
 	public void cantReachDestination() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[7];
@@ -47,7 +47,7 @@ public class EpsilonHantoGameTests {
 				new ConcreteHantoCoordinate(0, 7));
 		assertEquals(MoveResult.BLUE_WINS, result);
 	}
-	
+
 	@Test
 	public void checkJumpCanReachDestination() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[7];
@@ -71,7 +71,7 @@ public class EpsilonHantoGameTests {
 				new ConcreteHantoCoordinate(0, 7));
 		assertEquals(MoveResult.OK, result);
 	}
-	
+
 	@Test(expected = HantoException.class)
 	public void checkJumpCantReachDestination() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[7];
@@ -95,7 +95,7 @@ public class EpsilonHantoGameTests {
 				new ConcreteHantoCoordinate(1, 6));
 		assertEquals(MoveResult.OK, result);
 	}
-	
+
 	@Test(expected = HantoException.class)
 	public void checkJumpCantReachStraightNonConnectedCoord() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[7];
@@ -119,7 +119,7 @@ public class EpsilonHantoGameTests {
 				new ConcreteHantoCoordinate(0, 6));
 		assertEquals(MoveResult.OK, result);
 	}
-	
+
 	@Test(expected = HantoPrematureResignationException.class)
 	public void prematureResignationHandTest() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[7];
@@ -142,7 +142,7 @@ public class EpsilonHantoGameTests {
 		MoveResult result = testGame.makeMove(null, null, null);
 		assertEquals(MoveResult.RED_WINS, result);
 	}
-	
+
 	@Test(expected = HantoPrematureResignationException.class)
 	public void prematureResignationJumpTest() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[15];
@@ -182,7 +182,7 @@ public class EpsilonHantoGameTests {
 		MoveResult result = testGame.makeMove(null, null, null);
 		assertEquals(MoveResult.RED_WINS, result);
 	}
-	
+
 	@Test(expected = HantoPrematureResignationException.class)
 	public void prematureResignationTest() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
@@ -204,7 +204,7 @@ public class EpsilonHantoGameTests {
 		MoveResult result = testGame.makeMove(null, null, null);
 		assertEquals(MoveResult.RED_WINS, result);
 	}
-	
+
 	@Test(expected = HantoPrematureResignationException.class)
 	public void prematureResignationTestWalking() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[15];
@@ -244,7 +244,7 @@ public class EpsilonHantoGameTests {
 		MoveResult result = testGame.makeMove(null, null, null);
 		assertEquals(MoveResult.RED_WINS, result);
 	}
-	
+
 	@Test(expected = HantoPrematureResignationException.class)
 	public void prematureResignationTestFlying() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[15];
@@ -278,15 +278,14 @@ public class EpsilonHantoGameTests {
 				new ConcreteHantoCoordinate(0, 0));
 		initialPieces[14] = new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.SPARROW,
 				new ConcreteHantoCoordinate(13, 0));
-		
-		
+
 		testGame.initializeBoard(initialPieces);
 		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
 		testGame.setTurnNumber(20);
 		MoveResult result = testGame.makeMove(null, null, null);
 		assertEquals(MoveResult.RED_WINS, result);
 	}
-	
+
 	@Test
 	public void resignationTest() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[15];
@@ -320,14 +319,14 @@ public class EpsilonHantoGameTests {
 				new ConcreteHantoCoordinate(-1, 0));
 		initialPieces[14] = new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.SPARROW,
 				new ConcreteHantoCoordinate(13, 0));
-		
+
 		testGame.initializeBoard(initialPieces);
 		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
 		testGame.setTurnNumber(20);
 		MoveResult result = testGame.makeMove(null, null, null);
 		assertEquals(MoveResult.RED_WINS, result);
 	}
-	
+
 	@Test(expected = HantoException.class)
 	public void sparrowMoveTest() throws HantoException {
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
@@ -350,14 +349,12 @@ public class EpsilonHantoGameTests {
 				new ConcreteHantoCoordinate(0, -2));
 		assertEquals(MoveResult.OK, result);
 	}
-	
+
 	@Test
-	public void enumTest(){
+	public void enumTest() {
 		HexCoordinateDirections.valueOf("UP");
 	}
-	
-	
-	
+
 	private ConcreteHantoCoordinate coord(int x, int y) {
 		return new ConcreteHantoCoordinate(x, y);
 	}

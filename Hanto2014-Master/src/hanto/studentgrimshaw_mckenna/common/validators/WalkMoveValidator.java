@@ -88,7 +88,7 @@ public class WalkMoveValidator extends MoveValidator {
 	}
 
 	@Override
-	public List<HantoMoveRecord> checkNoMoveAvailable(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
+	public List<HantoMoveRecord> getAvailableMoves(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
 			ConcreteHantoCoordinate currentPosition) {
 		List<HantoMoveRecord> availableMoves = new ArrayList<HantoMoveRecord>();
 

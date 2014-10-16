@@ -163,70 +163,63 @@ public class ConcreteHantoCoordinate implements HantoCoordinate {
 		// The line is straight if either the x-coord or the y-coord remains
 		// unchanged.
 		if (x == to.getX()) {
-			straightLineCoords = getStraightXLine(to);
+			if (y < to.getY()) {
+				straightLineCoords = getStraightLine(to, HexCoordinateDirections.UP);
+			} else {
+				straightLineCoords = getStraightLine(to, HexCoordinateDirections.DOWN);
+			}
 		} else if (y == to.getY()) {
-			straightLineCoords = getStraightYLine(to);
+			if (x < to.getX()) {
+				straightLineCoords = getStraightLine(to, HexCoordinateDirections.UPRIGHT);
+			} else {
+				straightLineCoords = getStraightLine(to, HexCoordinateDirections.DOWNLEFT);
+			}
 		}
 		// The line is straight if the distance of x is equal to the inverse
 		// distance of y.
 		else if (to.getY() - y == (to.getX() - x) * -1) {
-			straightLineCoords = getStraightXYLine(to);
+			if (y < to.getY()) {
+				straightLineCoords = getStraightLine(to, HexCoordinateDirections.UPLEFT);
+			} else {
+				straightLineCoords = getStraightLine(to, HexCoordinateDirections.DOWNRIGHT);
+			}
 		} else {
 			throw new HantoException("Line is not straight");
 		}
 		return straightLineCoords;
 	}
 
-	protected List<ConcreteHantoCoordinate> getStraightXLine(ConcreteHantoCoordinate to) {
+	/**
+	 * Gets all coordinates between this coordinate and to. does not include
+	 * either this coord or to
+	 * 
+	 * @param to
+	 *            Destination
+	 * @param direction
+	 *            Direction in which to is
+	 * @return List of all coords between this and to
+	 */
+	private List<ConcreteHantoCoordinate> getStraightLine(ConcreteHantoCoordinate to, HexCoordinateDirections direction) {
 		List<ConcreteHantoCoordinate> straightLineCoords = new ArrayList<ConcreteHantoCoordinate>();
-		int larger, smaller;
-		if (y > to.getY()) {
-			smaller = to.getY();
-			larger = y;
-		} else {
-			smaller = y;
-			larger = to.getY();
-		}
-		for (int i = smaller + 1; i < larger; i++) {
-			straightLineCoords.add(new ConcreteHantoCoordinate(x, i));
+		if (!to.equals(this)) {
+
+			ConcreteHantoCoordinate currentCoord = getNeighbor(direction);
+			while (!currentCoord.equals(to)) {
+				straightLineCoords.add(currentCoord);
+				currentCoord = currentCoord.getNeighbor(direction);
+			}
 		}
 		return straightLineCoords;
+
 	}
 
-	protected List<ConcreteHantoCoordinate> getStraightYLine(ConcreteHantoCoordinate to) {
-		List<ConcreteHantoCoordinate> straightLineCoords = new ArrayList<ConcreteHantoCoordinate>();
-		int larger, smaller;
-		if (x > to.getX()) {
-			smaller = to.getX();
-			larger = x;
-		} else {
-			smaller = x;
-			larger = to.getX();
-		}
-		for (int i = smaller + 1; i < larger; i++) {
-			straightLineCoords.add(new ConcreteHantoCoordinate(i, y));
-		}
-		return straightLineCoords;
-	}
-
-	protected List<ConcreteHantoCoordinate> getStraightXYLine(ConcreteHantoCoordinate to) {
-		List<ConcreteHantoCoordinate> straightLineCoords = new ArrayList<ConcreteHantoCoordinate>();
-		int largerX, smallerX, largerY;
-		if (x > to.getX()) {
-			smallerX = to.getX();
-			largerX = x;
-			largerY = to.getY();
-		} else {
-			smallerX = x;
-			largerX = to.getX();
-			largerY = y;
-		}
-		for (int i = smallerX + 1, j = largerY - 1; i < largerX; i++, j--) {
-			straightLineCoords.add(new ConcreteHantoCoordinate(i, j));
-		}
-		return straightLineCoords;
-	}
-
+	/**
+	 * Gets the neighbor of this coordinate in the specified direction
+	 * 
+	 * @param direction
+	 *            Direction to get the neighbor from
+	 * @return neighbor
+	 */
 	public ConcreteHantoCoordinate getNeighbor(HexCoordinateDirections direction) {
 		ConcreteHantoCoordinate coord = null;
 		switch (direction) {

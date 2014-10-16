@@ -66,6 +66,11 @@ public interface HantoPlayer {
 	 */
 	HantoPlayerColor getColor();
 
+	/**
+	 * Gets if the player's hand is empty
+	 * 
+	 * @return true if hand is empty
+	 */
 	boolean isHandEmpty();
 
 }

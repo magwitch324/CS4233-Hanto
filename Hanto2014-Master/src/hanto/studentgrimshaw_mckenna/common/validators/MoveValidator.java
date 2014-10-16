@@ -143,6 +143,15 @@ public abstract class MoveValidator {
 	protected abstract void checkDestinationReachable(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
 			ConcreteHantoCoordinate from, ConcreteHantoCoordinate to) throws HantoException;
 
-	public abstract List<HantoMoveRecord> checkNoMoveAvailable(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
+	/**
+	 * Gets the available moves for the piece
+	 * 
+	 * @param board
+	 *            Board of pieces
+	 * @param currentPosition
+	 *            Position of the piece
+	 * @return List of available moves
+	 */
+	public abstract List<HantoMoveRecord> getAvailableMoves(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
 			ConcreteHantoCoordinate currentPosition);
 }

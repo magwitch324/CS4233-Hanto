@@ -106,10 +106,19 @@ public class ConcreteHantoPiece implements HantoPiece {
 		return "Color: " + color + "\tType: " + type;
 	}
 
-	public List<HantoMoveRecord> checkCanMakeMove(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board, ConcreteHantoCoordinate currentPosition) {
-		return validator.checkNoMoveAvailable(board, currentPosition);
-		
-		
+	/**
+	 * Gets a list of all available moves for the piece
+	 * 
+	 * @param board
+	 *            Board of pieces
+	 * @param currentPosition
+	 *            Position of the piece
+	 * @return List of available moves
+	 */
+	public List<HantoMoveRecord> getAvailableMoves(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
+			ConcreteHantoCoordinate currentPosition) {
+		return validator.getAvailableMoves(board, currentPosition);
+
 	}
 
 }

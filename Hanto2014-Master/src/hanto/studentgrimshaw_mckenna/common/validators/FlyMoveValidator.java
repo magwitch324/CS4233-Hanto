@@ -31,12 +31,21 @@ public class FlyMoveValidator extends MoveValidator {
 
 	int maxDistance;
 
-	public FlyMoveValidator(int maxDistance) {
-		this.maxDistance = maxDistance;
-	}
-
+	/**
+	 * Default constructor for FlyMoveValidator
+	 */
 	public FlyMoveValidator() {
 		maxDistance = Integer.MAX_VALUE;
+	}
+
+	/**
+	 * Constructor for FlyMoveValidator that specifies the mad distance
+	 * 
+	 * @param maxDistance
+	 *            Maximum distance it is allowed to fly
+	 */
+	public FlyMoveValidator(int maxDistance) {
+		this.maxDistance = maxDistance;
 	}
 
 	@Override
@@ -50,9 +59,12 @@ public class FlyMoveValidator extends MoveValidator {
 	}
 
 	@Override
-	public List<HantoMoveRecord> checkNoMoveAvailable(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
+	public List<HantoMoveRecord> getAvailableMoves(Map<ConcreteHantoCoordinate, ConcreteHantoPiece> board,
 			ConcreteHantoCoordinate currentPosition) {
+
 		List<HantoMoveRecord> availableMoves = new ArrayList<HantoMoveRecord>();
+
+		// checks if it can move next to every neighbor of each piece
 		Iterator<Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece>> it = board.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece> pair = it.next();

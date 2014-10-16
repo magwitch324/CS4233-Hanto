@@ -120,8 +120,7 @@ public class HantoPieceFactory {
 		}
 		return piece;
 	}
-	
-	
+
 	/**
 	 * Creates EpsilonHanto pieces
 	 * 

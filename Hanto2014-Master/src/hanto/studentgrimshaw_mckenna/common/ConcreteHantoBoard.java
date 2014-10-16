@@ -202,26 +202,27 @@ public class ConcreteHantoBoard implements HantoBoard {
 	}
 
 	@Override
-	public List<HantoMoveRecord> checkPlayerHasAvailableMove(HantoPlayerColor playerColor) {
+	public List<HantoMoveRecord> getPlayersAvailableMoves(HantoPlayerColor playerColor) {
 		List<HantoMoveRecord> availableMoves = new ArrayList<HantoMoveRecord>();
 		Iterator<Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece>> it = board.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece> pair = it.next();
 			ConcreteHantoPiece piece = pair.getValue();
 			if (piece.getColor() == playerColor) {
-				availableMoves.addAll(piece.checkCanMakeMove(board, pair.getKey()));
+				availableMoves.addAll(piece.getAvailableMoves(board, pair.getKey()));
 			}
 		}
 		return availableMoves;
 	}
 
 	@Override
-	public List<ConcreteHantoCoordinate> getAvailablePlacementPlace(HantoPlayerColor color, int turnNumber) {
+	public List<ConcreteHantoCoordinate> getPlayersAvailablePlacements(HantoPlayerColor color, int turnNumber) {
 		List<ConcreteHantoCoordinate> availablePlacements = new ArrayList<ConcreteHantoCoordinate>();
 		Iterator<Map.Entry<ConcreteHantoCoordinate, ConcreteHantoPiece>> it = board.entrySet().iterator();
 
+		// special case if first turn
 		if (turnNumber == 1) {
-			availablePlacements.addAll(getFirstTurnPlacements());
+			availablePlacements.addAll(getAvailableFirstTurnPlacements());
 		} else {
 
 			while (it.hasNext()) {
@@ -243,7 +244,12 @@ public class ConcreteHantoBoard implements HantoBoard {
 
 	}
 
-	private List<ConcreteHantoCoordinate> getFirstTurnPlacements() {
+	/**
+	 * Determines the available placements for the first turn
+	 * 
+	 * @return List of available placements
+	 */
+	private List<ConcreteHantoCoordinate> getAvailableFirstTurnPlacements() {
 		List<ConcreteHantoCoordinate> availablePlacements = new ArrayList<ConcreteHantoCoordinate>();
 		ConcreteHantoCoordinate zero = new ConcreteHantoCoordinate(0, 0);
 		if (board.size() == 0) {

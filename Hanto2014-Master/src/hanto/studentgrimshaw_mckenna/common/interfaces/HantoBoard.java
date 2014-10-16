@@ -111,7 +111,23 @@ public interface HantoBoard {
 	 */
 	String getPrintableBoard();
 
-	List<HantoMoveRecord> checkPlayerHasAvailableMove(HantoPlayerColor playerColor);
+	/**
+	 * Gets a list of the player's available moves
+	 * 
+	 * @param playerColor
+	 *            Player
+	 * @return List of available moves
+	 */
+	List<HantoMoveRecord> getPlayersAvailableMoves(HantoPlayerColor playerColor);
 
-	List<ConcreteHantoCoordinate> getAvailablePlacementPlace(HantoPlayerColor color, int turnNumber);
+	/**
+	 * Gets a list of the player's available placements
+	 * 
+	 * @param color
+	 *            Player
+	 * @param turnNumber
+	 *            Current turn
+	 * @return List of available moves
+	 */
+	List<ConcreteHantoCoordinate> getPlayersAvailablePlacements(HantoPlayerColor color, int turnNumber);
 }
